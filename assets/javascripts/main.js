@@ -216,8 +216,8 @@ $("#VideoModal").on("hidden.bs.modal", function (e) {
 })();
 
 
-jQuery(function () {
-  if ($('#tree').length)
-    createFamilyTree();
+// jQuery(function () {
+//   if ($('#tree').length)
+//     createFamilyTree();
 
-});
+// });
