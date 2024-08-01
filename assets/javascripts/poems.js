@@ -19,7 +19,8 @@ function generatePoemsContent () {
   $.each(poems, function (index) {
     let colDiv = $("<div>").addClass("col-lg-4 col-md-12 mb-4 mb-lg-0 p-5");
     let imgDiv = $("<div>").attr("data-id", this.poemSrc).attr("data-ripple-color", "light").addClass("bg-image hover-overlay ripple shadow-1-strong rounded video-holder");
-    let a = $("<a>").attr("href", "#!").attr("data-bs-toggle", "modal").attr("data-bs-target", "#VideoModal")
+    // let a = $("<a>").attr("href", "#!").attr("data-bs-toggle", "modal").attr("data-bs-target", "#VideoModal")
+    let a = $( "<a>" ).attr( "href", "https://www.youtube.com/watch?v=" + this.poemSrc )
     console.log( this.poemTitle )
     let titleSpan = $("<span>").addClass("badge badge-pill bg-info poemTitle w-100").append(this.poemTitle);
     let img = $("<img>").attr("src", "https://img.youtube.com/vi/" + this.poemSrc + "/hqdefault.jpg").addClass("w-100");
