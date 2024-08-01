@@ -92,7 +92,7 @@ $("#VideoModal").on("hidden.bs.modal", function (e) {
 
 
   /**
-   * Hero type effect
+   * Profile type effect
    */
   const typed = select(".typed");
   if (typed) {
