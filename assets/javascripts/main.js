@@ -1,10 +1,12 @@
+// Array of image file names
+const imageFiles = [ 'awards_1-min.jpg', 'awards_2-min.jpg', 'awards_3-min.jpg', 'awards_4-min.jpg', 'awards_5-min.jpg', 'awards_6-min.jpg', 'awards_7-min.jpg' ];
+const imagePath = 'assets/images/awards/';
 function generateGalleryContent () {
-
-  let galleryImages = [{
-    imageSrc: 'https://mdbcdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(73).webp',
-    imageTitle: 'some image',
-    imageDescription: 'some description'
-  }]
+  let galleryImages = imageFiles.map( fileName => ( {
+    imageSrc: `${ imagePath }${ fileName }`,
+    imageTitle: fileName.split( '.' )[ 0 ], // Use file name without extension as title
+    imageDescription: 'Description for ' + fileName
+  } ) );
 
   let rowDiv = $("<div>").addClass("row");
   $.each(galleryImages, function (index) {
