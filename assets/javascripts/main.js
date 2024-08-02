@@ -1,14 +1,7 @@
-// Array of image file names
-const imageFiles = [ 'awards_1-min.jpg', 'awards_2-min.jpg', 'awards_3-min.jpg', 'awards_4-min.jpg', 'awards_5-min.jpg', 'awards_6-min.jpg', 'awards_7-min.jpg' ];
-const imagePath = 'assets/images/awards/';
 function generateGalleryContent () {
-  let galleryImages = imageFiles.map( fileName => ( {
-    imageSrc: `${ imagePath }${ fileName }`,
-    imageTitle: fileName.split( '.' )[ 0 ], // Use file name without extension as title
-    imageDescription: 'Description for ' + fileName
-  } ) );
 
   let rowDiv = $( "<div>" ).addClass( "row" );
+  $.getJSON( 'assets/javascripts/galleryImages.json', function ( galleryImages ) {
   $.each( galleryImages, function ( index ) {
     // For thumbnails
     let div = $( "<div>" )
@@ -25,7 +18,7 @@ function generateGalleryContent () {
     let modalContentDiv = $( "<div>" ).addClass( "modal-content col-lg-2 col-md-4 col-sm-4 m-3  position-relative rounded p-3" );
     let imgModalContent = $( "<img>" ).attr( "src", this.imageSrc ).addClass( "img-fluid image shadow-1-strong rounded" );
 
-    let descrSpan = $( "<span>" ).attr( "style", "width: 100%;" ).addClass( "badge bg-secondary text-center" ).append( this.imageDescription );//TODO
+    let descrSpan = $( "<span>" ).attr( "style", "width: 100%;" ).addClass( "badge bg-primary text-center" ).append( this.imageDescription );//TODO
     let buttonDiv = $( "<div>" ).addClass( "text-center p-3" );
     let button = $( "<button>" ).attr( "type", "button" ).attr( "data-bs-dismiss", "modal" ).addClass( "btn btn-danger w-100" ).append( "Close" );
     modalDiv.append( innerDiv.append( modalContentDiv.append( imgModalContent ).append( descrSpan ).append( buttonDiv.append( button ) ) ) )
@@ -34,6 +27,9 @@ function generateGalleryContent () {
   } );
   // you haven't touched the DOM yet, everything thus far has been in memory
   $( "#toReplaceGallery" ).html( rowDiv ); // this is the only time you touch the DOM
+  } ).fail( function () {
+    console.error( "Failed to load the gallery images JSON file." );
+  } );
 }
 function _calculateAge ( birthday ) {
   // birthday is a date
