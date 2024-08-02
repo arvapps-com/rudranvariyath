@@ -1,0 +1,52 @@
+[
+    {
+        "imageSrc": "assets/images/awards/awards_1.jpg",
+        "imageTitle": "Bhashamalayalam",
+        "imageDescription": "Bhashamalayalam"
+    },
+    {
+        "imageSrc": "assets/images/awards/awards_2.jpg",
+        "imageTitle": "Nirmalyam",
+        "imageDescription": "Nirmalyam"
+    },
+    {
+        "imageSrc": "assets/images/awards/awards_3.jpg",
+        "imageTitle": "KPPC",
+        "imageDescription": "KPPC"
+    },
+    {
+        "imageSrc": "assets/images/awards/awards_4.jpg",
+        "imageTitle": "Kavyatheeram",
+        "imageDescription": "Kavyatheeram"
+    },
+    {
+        "imageSrc": "assets/images/awards/awards_5.jpg",
+        "imageTitle": "Panchayath",
+        "imageDescription": "Panchayath"
+    },
+    {
+        "imageSrc": "assets/images/awards/awards_6.jpg",
+        "imageTitle": "Nalanda",
+        "imageDescription": "Nalanda"
+    },
+    {
+        "imageSrc": "assets/images/awards/awards_7.jpg",
+        "imageTitle": "Red Power",
+        "imageDescription": "Red Power"
+    },
+    {
+        "imageSrc": "assets/images/awards/awards_8.jpg",
+        "imageTitle": "Qatar Velicham",
+        "imageDescription": "Qatar Velicham"
+    },
+    {
+        "imageSrc": "assets/images/awards/awards_9.jpg",
+        "imageTitle": "Dist. Panchayath",
+        "imageDescription": "Dist. Panchayath"
+    },
+    {
+        "imageSrc": "assets/images/awards/awards_10.jpg",
+        "imageTitle": "Red Rose",
+        "imageDescription": "Red Rose"
+    }
+]
