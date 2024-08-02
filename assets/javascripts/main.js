@@ -12,7 +12,7 @@ function generateGalleryContent () {
   $.each( galleryImages, function ( index ) {
     // For thumbnails
     let div = $( "<div>" )
-      .addClass( "col-lg-2 col-md-4 col-sm-4 m-3 item position-relative rounded p-3" );
+      .addClass( "col-lg-2 col-md-3 col-sm-4 m-3 position-relative rounded p-3" );
 
     let a = $( "<a>" ).attr( "href", "#!" ).attr( "data-bs-toggle", "modal" ).attr( "data-bs-target", "#Image" + index ) //TODO
     let img = $( "<img>" ).attr( "src", this.imageSrc ).addClass( "img-fluid image w-100 h-100 shadow-1-strong rounded" );
@@ -22,7 +22,7 @@ function generateGalleryContent () {
     let modalDiv = $( "<div>" ).attr( "id", "Image" + index ).attr( "tabindex", "1" ).attr( "aria-labelledby", "Image" + index + "Label" ).attr( "aria-hidden", "true" ).addClass( "modal fade" );
 
     let innerDiv = $( "<div>" ).addClass( "modal-dialog modal-lg" );
-    let modalContentDiv = $( "<div>" ).addClass( "modal-content col-lg-2 col-md-4 col-sm-4 m-3 item position-relative rounded p-3" );
+    let modalContentDiv = $( "<div>" ).addClass( "modal-content col-lg-2 col-md-4 col-sm-4 m-3  position-relative rounded p-3" );
     let imgModalContent = $( "<img>" ).attr( "src", this.imageSrc ).addClass( "img-fluid image shadow-1-strong rounded" );
 
     let descrSpan = $( "<span>" ).attr( "style", "width: 100%;" ).addClass( "badge bg-secondary text-center" ).append( this.imageDescription );//TODO

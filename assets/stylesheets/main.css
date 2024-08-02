@@ -854,7 +854,7 @@ h6 {
   position: relative;
   overflow: hidden;
   margin-bottom: 20px;
-  border: 2px solid #ddd; /* Light gray border */
+  border: 2px solid #16151550; /* Light gray border */
   border-radius: 8px; /* Rounded corners */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow */
   transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
