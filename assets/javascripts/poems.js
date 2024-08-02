@@ -17,10 +17,12 @@ function generatePoemsContent () {
 
   let rowDiv = $( "<div>" ).addClass( "row" );
   $.each( poems, function ( index ) {
-    let colDiv = $( "<div>" ).addClass( "col-lg-2 col-md-3 mb-6 mb-lg-0 p-3" );
+    let colDiv = $( "<div>" )
+      .addClass( "col-lg-2 col-md-4 col-sm-4 m-3 item position-relative rounded p-3" );
+    // let colDiv = $( "<div>" ).addClass( "col-lg-2 col-md-3 mb-6 mb-lg-0 p-3" );
     let imgDiv = $( "<div>" ).attr( "data-id", this.poemSrc ).attr( "data-ripple-color", "light" ).addClass( "bg-image hover-overlay ripple shadow-1-strong rounded video-holder" );
     // let a = $("<a>").attr("href", "#!").attr("data-bs-toggle", "modal").attr("data-bs-target", "#VideoModal")
-    let a = $( "<a>" ).attr( "href", "https://www.youtube.com/watch?v=" + this.poemSrc )
+    let a = $( "<a>" ).attr( "href", "https://www.youtube.com/watch?v=" + this.poemSrc ).attr( "target", "_blank" )
     console.log( this.poemTitle )
     let titleSpan = $( "<span>" ).addClass( "badge badge-pill bg-info poemTitle w-100" ).append( this.poemTitle );
     let img = $( "<img>" ).attr( "src", "https://img.youtube.com/vi/" + this.poemSrc + "/hqdefault.jpg" ).addClass( "w-100" );
@@ -46,21 +48,22 @@ function generatePoemsContent () {
     // }
   } );
 
-  let modalDiv = $( "<div>" ).attr( "id", "VideoModal" ).attr( "tabindex", "1" ).attr( "aria-labelledby", "VideoLabel" ).attr( "aria-hidden", "true" ).addClass( "modal fade" );
+  // For Pop Up video player 
+  // let modalDiv = $( "<div>" ).attr( "id", "VideoModal" ).attr( "tabindex", "1" ).attr( "aria-labelledby", "VideoLabel" ).attr( "aria-hidden", "true" ).addClass( "modal fade" );
 
-  let dialogDiv = $( "<div>" ).addClass( "modal-dialog modal-xl modal-dialog-centered" );
-  let modalContentDiv = $( "<div>" ).addClass( "modal-content" );
-  let popUpSpan = $( "<span>" ).attr( "id", "popupTitle" ).addClass( "badge badge-pill bg-info poemTitle" )
-  // let iframeDiv = $("<div>").addClass("ratio ratio-16x9");
-  // let iframe = $("<iframe>").addClass("ratio ratio-16x9").attr("src", "#").attr("title", "YouTube video").attr("id", "VideoFrame").attr("allow", "autoplay; encrypted-media").append("allowfullscreen");
+  // let dialogDiv = $( "<div>" ).addClass( "modal-dialog modal-xl modal-dialog-centered" );
+  // let modalContentDiv = $( "<div>" ).addClass( "modal-content" );
+  // let popUpSpan = $( "<span>" ).attr( "id", "popupTitle" ).addClass( "badge badge-pill bg-info poemTitle" )
+  // // let iframeDiv = $("<div>").addClass("ratio ratio-16x9");
+  // // let iframe = $("<iframe>").addClass("ratio ratio-16x9").attr("src", "#").attr("title", "YouTube video").attr("id", "VideoFrame").attr("allow", "autoplay; encrypted-media").append("allowfullscreen");
 
-  let btnDiv = $( "<div>" ).addClass( "text-center" );
-  let btn = $( "<button>" ).attr( "type", "button" ).attr( "data-bs-dismiss", "modal" ).addClass( "btn btn-danger w-100" ).append( "Close" );
+  // let btnDiv = $( "<div>" ).addClass( "text-center" );
+  // let btn = $( "<button>" ).attr( "type", "button" ).attr( "data-bs-dismiss", "modal" ).addClass( "btn btn-danger w-100" ).append( "Close" );
 
-  // modalDiv.append(dialogDiv.append(modalContentDiv.append(popUpSpan).append(iframeDiv.append(iframe)).append(btnDiv.append(btn))));
-  modalDiv.append( dialogDiv.append( modalContentDiv.append( popUpSpan ).append( btnDiv.append( btn ) ) ) );
+  // // modalDiv.append(dialogDiv.append(modalContentDiv.append(popUpSpan).append(iframeDiv.append(iframe)).append(btnDiv.append(btn))));
+  // modalDiv.append( dialogDiv.append( modalContentDiv.append( popUpSpan ).append( btnDiv.append( btn ) ) ) );
 
-  rowDiv.append( modalDiv );
+  // rowDiv.append( modalDiv );
   // you haven't touched the DOM yet, everything thus far has been in memory
   $( "#toReplacePoems" ).html( rowDiv ); // this is the only time you touch the DOM
 }

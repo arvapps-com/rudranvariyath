@@ -10,14 +10,15 @@ function generateGalleryContent () {
 
   let rowDiv = $( "<div>" ).addClass( "row" );
   $.each( galleryImages, function ( index ) {
+    // For thumbnails
     let div = $( "<div>" )
       .addClass( "col-lg-2 col-md-4 col-sm-4 m-3 item position-relative rounded p-3" );
 
     let a = $( "<a>" ).attr( "href", "#!" ).attr( "data-bs-toggle", "modal" ).attr( "data-bs-target", "#Image" + index ) //TODO
-    let img = $( "<img>" ).attr( "src", this.imageSrc ).addClass( "img-fluid image w-100 shadow-1-strong rounded" );
+    let img = $( "<img>" ).attr( "src", this.imageSrc ).addClass( "img-fluid image w-100 h-100 shadow-1-strong rounded" );
     div.append( a.append( img ) );
     rowDiv.append( div );
-
+    // This is for pop up section
     let modalDiv = $( "<div>" ).attr( "id", "Image" + index ).attr( "tabindex", "1" ).attr( "aria-labelledby", "Image" + index + "Label" ).attr( "aria-hidden", "true" ).addClass( "modal fade" );
 
     let innerDiv = $( "<div>" ).addClass( "modal-dialog modal-lg" );
