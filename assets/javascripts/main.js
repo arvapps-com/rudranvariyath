@@ -21,12 +21,12 @@ function generateGalleryContent () {
     let modalDiv = $( "<div>" ).attr( "id", "Image" + index ).attr( "tabindex", "1" ).attr( "aria-labelledby", "Image" + index + "Label" ).attr( "aria-hidden", "true" ).addClass( "modal fade" );
 
     let innerDiv = $( "<div>" ).addClass( "modal-dialog modal-lg" );
-    let modalContentDiv = $( "<div>" ).addClass( "modal-content" );
+    let modalContentDiv = $( "<div>" ).addClass( "modal-content col-lg-2 col-md-4 col-sm-4 m-3 item position-relative rounded p-3" );
     let imgModalContent = $( "<img>" ).attr( "src", this.imageSrc ).addClass( "img-fluid image shadow-1-strong rounded" );
 
     let descrSpan = $( "<span>" ).attr( "style", "width: 100%;" ).addClass( "badge bg-secondary text-center" ).append( this.imageDescription );//TODO
-    let buttonDiv = $( "<div>" ).addClass( "text-center py-3" );
-    let button = $( "<button>" ).attr( "type", "button" ).attr( "data-bs-dismiss", "modal" ).addClass( "btn btn-secondary" );
+    let buttonDiv = $( "<div>" ).addClass( "text-center p-3" );
+    let button = $( "<button>" ).attr( "type", "button" ).attr( "data-bs-dismiss", "modal" ).addClass( "btn btn-danger w-100" ).append( "Close" );
     modalDiv.append( innerDiv.append( modalContentDiv.append( imgModalContent ).append( descrSpan ).append( buttonDiv.append( button ) ) ) )
     rowDiv.append( modalDiv );
 
