@@ -1,6 +1,6 @@
 function generateGalleryContent () {
 
-  let rowDiv = $( "<div>" ).addClass( "row" );
+  let rowDiv = $( "<div>" ).addClass( "row justify-content-center" );
   $.getJSON( 'assets/javascripts/galleryImages.json', function ( galleryImages ) {
   $.each( galleryImages, function ( index ) {
     // For thumbnails
