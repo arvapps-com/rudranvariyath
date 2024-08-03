@@ -5,7 +5,7 @@ function generateGalleryContent () {
   $.each( galleryImages, function ( index ) {
     // For thumbnails
     let div = $( "<div>" )
-      .addClass( "col-lg-2 col-md-3 col-sm-4 m-3 position-relative rounded p-3" );
+      .addClass( "col-lg-2 col-md-3 col-sm-4 m-3 position-relative rounded p-3 border border-2 rounded shadow" );
 
     let a = $( "<a>" ).attr( "href", "#!" ).attr( "data-bs-toggle", "modal" ).attr( "data-bs-target", "#Image" + index ) //TODO
     let img = $( "<img>" ).attr( "src", this.imageSrc ).addClass( "img-fluid image w-100 h-100 shadow-1-strong rounded" );

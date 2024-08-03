@@ -615,13 +615,13 @@ h6 {
   font-weight: 700;
   margin-bottom: 60px;
 }
-.poems-block.project .gallery {
+.poems-block.project .books {
   margin-top: 30px;
 }
-.poems-block.project .gallery .item {
+.poems-block.project .books .item {
   margin-bottom: 20px;
 }
-.poems-block.project .gallery .item img {
+.poems-block.project .books .item img {
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
   transition: 0.4s;
 }
@@ -885,7 +885,7 @@ h6 {
   border-radius: 10px; /* Rounded corners */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow for depth */
   overflow: hidden; /* Ensure no overflow */
-  padding: 0; /* Remove padding to make border fit image */
+  padding: 1; /* Remove padding to make border fit image */
   margin: auto; /* Center the container */
 }
 
@@ -903,3 +903,64 @@ h6 {
   }
 }
 
+/*--------------------------------------------------------------
+# Books Section
+--------------------------------------------------------------*/
+.books .books-item {
+  position: relative;
+  overflow: hidden;
+  border-radius: 20px;
+  border: 5px solid #ff5722; /* Thicker border with a bright color */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.books .books-item img {
+  transition: transform 0.3s;
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 15px; /* Adjust border-radius to fit inside */
+}
+
+.books .books-item:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Enhance shadow on hover */
+  transform: translateY(-5px); /* Lift effect on hover */
+}
+
+.books .books-links {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 20px; /* Ensure overlay fits with border radius */
+}
+
+.books .books-links .details-link {
+  font-size: 20px;
+  color: rgba(255, 255, 255, 0.8);
+  transition: color 0.3s;
+  text-align: center;
+}
+
+.books .books-item:hover .books-links {
+  opacity: 1;
+}
+
+.books .books-item:hover img {
+  transform: scale(1.05); /* Slightly increase scale for subtle zoom effect */
+}
+
+.glightbox-clean .gslide-description {
+  background: #272727;
+}
+
+.glightbox-clean .gslide-title {
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0;
+}
