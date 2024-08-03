@@ -865,11 +865,7 @@ h6 {
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Enhanced shadow on hover */
 }
 
-.img-fluid {
-  width: 100%; /* Make image fill the container width */
-  height: auto; /* Maintain aspect ratio */
-  object-fit: cover; /* Cover container */
-}
+
 
 .modal-content img {
   max-width: 100%;
