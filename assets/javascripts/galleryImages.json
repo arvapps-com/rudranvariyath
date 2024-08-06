@@ -48,5 +48,10 @@
         "imageSrc": "assets/images/awards/awards_10.jpg",
         "imageTitle": "Red Rose",
         "imageDescription": "Red Rose"
+    },
+    {
+        "imageSrc": "assets/images/awards/awards_11.jpg",
+        "imageTitle": "Bharat Sevak Samaj",
+        "imageDescription": "Bharat Sevak Samaj"
     }
 ]
