@@ -1,0 +1,27 @@
+[
+    {
+        "imageSrc": "assets/images/books/Rudran_variyathinte_kavithakal.jpg",
+        "imageTitle": "Bhashamalayalam",
+        "imageDescription": "Bhashamalayalam"
+    },
+    {
+        "imageSrc": "assets/images/books/Ormacheppu_large.jpg",
+        "imageTitle": "Nirmalyam",
+        "imageDescription": "Nirmalyam"
+    },
+    {
+        "imageSrc": "assets/images/books/Aksharadeepam_large.jpg",
+        "imageTitle": "KPPC",
+        "imageDescription": "KPPC"
+    },
+    {
+        "imageSrc": "assets/images/books/Naalamyamam_large.jpg",
+        "imageTitle": "Kavyatheeram",
+        "imageDescription": "Kavyatheeram"
+    },
+    {
+        "imageSrc": "assets/images/books/Naalamyamam_large.jpg",
+        "imageTitle": "Kavyatheeram",
+        "imageDescription": "Kavyatheeram"
+    }
+]
