@@ -1,36 +1,71 @@
 function generateGalleryContent () {
 
   let rowDiv = $( "<div>" ).addClass( "row justify-content-center" );
-  $.getJSON( 'assets/javascripts/galleryImages.json', function ( galleryImages ) {
-  $.each( galleryImages, function ( index ) {
-    // For thumbnails
-    let div = $( "<div>" )
-      .addClass( "col-lg-2 col-md-3 col-sm-2 m-3 position-relative rounded p-3 border border-2 rounded shadow" );
+  $.getJSON( 'assets/javascripts/award-images.json', function ( galleryImages ) {
+    $.each( galleryImages, function ( index ) {
+      // For thumbnails
+      let div = $( "<div>" )
+        .addClass( "col-lg-2 col-md-3 col-sm-2 m-3 position-relative rounded p-3 border border-2 rounded shadow" );
 
-    let a = $( "<a>" ).attr( "href", "#!" ).attr( "data-bs-toggle", "modal" ).attr( "data-bs-target", "#Image" + index ) //TODO
-    let img = $( "<img>" ).attr( "src", this.imageSrc ).addClass( "img-fluid image w-100 h-100 shadow-1-strong rounded" );
-    div.append( a.append( img ) );
-    rowDiv.append( div );
-    // This is for pop up section
-    let modalDiv = $( "<div>" ).attr( "id", "Image" + index ).attr( "tabindex", "1" ).attr( "aria-labelledby", "Image" + index + "Label" ).attr( "aria-hidden", "true" ).addClass( "modal fade" );
+      let a = $( "<a>" ).attr( "href", "#!" ).attr( "data-bs-toggle", "modal" ).attr( "data-bs-target", "#AwardImage" + index ) //TODO
+      let img = $( "<img>" ).attr( "src", this.imageSrc ).addClass( "img-fluid image w-100 h-100 shadow-1-strong rounded" );
+      div.append( a.append( img ) );
+      rowDiv.append( div );
+      // This is for pop up section
+      let modalDiv = $( "<div>" ).attr( "id", "AwardImage" + index ).attr( "tabindex", "1" ).attr( "aria-labelledby", "AwardImage" + index + "Label" ).attr( "aria-hidden", "true" ).addClass( "modal fade" );
 
-    let innerDiv = $( "<div>" ).addClass( "modal-dialog modal-lg" );
-    let modalContentDiv = $( "<div>" ).addClass( "modal-content col-lg-2 col-md-4 col-sm-4 m-3  position-relative rounded p-3" );
-    let imgModalContent = $( "<img>" ).attr( "src", this.imageSrc ).addClass( "img-fluid image shadow-1-strong rounded" );
+      let innerDiv = $( "<div>" ).addClass( "modal-dialog modal-lg" );
+      let modalContentDiv = $( "<div>" ).addClass( "modal-content col-lg-2 col-md-4 col-sm-4 m-3  position-relative rounded p-3" );
+      let imgModalContent = $( "<img>" ).attr( "src", this.imageSrc ).addClass( "img-fluid image shadow-1-strong rounded" );
 
-    let descrSpan = $( "<span>" ).attr( "style", "width: 100%;" ).addClass( "badge bg-primary text-center" ).append( this.imageDescription );//TODO
-    let buttonDiv = $( "<div>" ).addClass( "text-center p-3" );
-    let button = $( "<button>" ).attr( "type", "button" ).attr( "data-bs-dismiss", "modal" ).addClass( "btn btn-danger w-100" ).append( "Close" );
-    modalDiv.append( innerDiv.append( modalContentDiv.append( imgModalContent ).append( descrSpan ).append( buttonDiv.append( button ) ) ) )
-    rowDiv.append( modalDiv );
+      let descrSpan = $( "<span>" ).attr( "style", "width: 100%;" ).addClass( "badge bg-primary text-center" ).append( this.imageDescription );//TODO
+      let buttonDiv = $( "<div>" ).addClass( "text-center p-3" );
+      let button = $( "<button>" ).attr( "type", "button" ).attr( "data-bs-dismiss", "modal" ).addClass( "btn btn-danger w-100" ).append( "Close" );
+      modalDiv.append( innerDiv.append( modalContentDiv.append( imgModalContent ).append( descrSpan ).append( buttonDiv.append( button ) ) ) )
+      rowDiv.append( modalDiv );
 
-  } );
-  // you haven't touched the DOM yet, everything thus far has been in memory
-  $( "#toReplaceGallery" ).html( rowDiv ); // this is the only time you touch the DOM
+    } );
+    // you haven't touched the DOM yet, everything thus far has been in memory
+    $( "#toReplaceGallery" ).html( rowDiv ); // this is the only time you touch the DOM
   } ).fail( function () {
     console.error( "Failed to load the gallery images JSON file." );
   } );
 }
+
+function generateBooksContent () {
+
+  let rowDiv = $( "<div>" ).addClass( "row justify-content-center" );
+  $.getJSON( 'assets/javascripts/book-images.json', function ( bookImages ) {
+    $.each( bookImages, function ( index ) {
+      // For thumbnails
+      let div = $( "<div>" )
+        .addClass( "col-lg-2 col-md-3 col-sm-2 m-3 position-relative rounded p-3 border border-2 rounded shadow" );
+
+      let a = $( "<a>" ).attr( "href", "#!" ).attr( "data-bs-toggle", "modal" ).attr( "data-bs-target", "#BookImage" + index ) //TODO
+      let img = $( "<img>" ).attr( "src", this.imageSrc ).addClass( "img-fluid image w-100 h-100 shadow-1-strong rounded" );
+      div.append( a.append( img ) );
+      rowDiv.append( div );
+      // This is for pop up section
+      let modalDiv = $( "<div>" ).attr( "id", "BookImage" + index ).attr( "tabindex", "1" ).attr( "aria-labelledby", "BookImage" + index + "Label" ).attr( "aria-hidden", "true" ).addClass( "modal fade" );
+
+      let innerDiv = $( "<div>" ).addClass( "modal-dialog modal-lg" );
+      let modalContentDiv = $( "<div>" ).addClass( "modal-content col-lg-2 col-md-4 col-sm-4 m-3  position-relative rounded p-3" );
+      let imgModalContent = $( "<img>" ).attr( "src", this.imageSrc ).addClass( "img-fluid image shadow-1-strong rounded" );
+
+      let descrSpan = $( "<span>" ).attr( "style", "width: 100%;" ).addClass( "badge bg-primary text-center" ).append( this.imageDescription );//TODO
+      let buttonDiv = $( "<div>" ).addClass( "text-center p-3" );
+      let button = $( "<button>" ).attr( "type", "button" ).attr( "data-bs-dismiss", "modal" ).addClass( "btn btn-danger w-100" ).append( "Close" );
+      modalDiv.append( innerDiv.append( modalContentDiv.append( imgModalContent ).append( descrSpan ).append( buttonDiv.append( button ) ) ) )
+      rowDiv.append( modalDiv );
+
+    } );
+    // you haven't touched the DOM yet, everything thus far has been in memory
+    $( "#toReplaceBooks" ).html( rowDiv ); // this is the only time you touch the DOM
+  } ).fail( function () {
+    console.error( "Failed to load the gallery images JSON file." );
+  } );
+}
+
 function _calculateAge ( birthday ) {
   // birthday is a date
   var ageDifMs = Date.now() - birthday.getTime();
@@ -63,6 +98,7 @@ $( "#VideoModal" ).on( "hidden.bs.modal", function ( e ) {
   }
 
   generateGalleryContent();
+  generateBooksContent();
 
   /**
    * Easy selector helper function
