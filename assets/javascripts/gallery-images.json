@@ -38,20 +38,5 @@
         "imageSrc": "assets/images/gallery/gallery_8.jpg",
         "imageTitle": "Qatar Velicham",
         "imageDescription": "Qatar Velicham"
-    },
-    {
-        "imageSrc": "assets/images/gallery/gallery_9.jpg",
-        "imageTitle": "Dist. Panchayath",
-        "imageDescription": "Dist. Panchayath"
-    },
-    {
-        "imageSrc": "assets/images/gallery/gallery_10.jpg",
-        "imageTitle": "Red Rose",
-        "imageDescription": "Red Rose"
-    },
-    {
-        "imageSrc": "assets/images/gallery/gallery_11.jpg",
-        "imageTitle": "Bharat Sevak Samaj",
-        "imageDescription": "Bharat Sevak Samaj"
     }
 ]
