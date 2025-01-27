@@ -1,6 +1,6 @@
 function generateGalleryContent () {
 
-  let rowDiv = $( "<div>" ).addClass( "row justify-content-center" );
+  let rowDiv_for_home = $( "<div>" ).addClass( "row justify-content-center" );
   $.getJSON( 'assets/javascripts/gallery-images.json', function ( galleryImages ) {
     $.each( galleryImages, function ( index ) {
       // For thumbnails
@@ -10,7 +10,7 @@ function generateGalleryContent () {
       let a = $( "<a>" ).attr( "href", "#!" ).attr( "data-bs-toggle", "modal" ).attr( "data-bs-target", "#GalleryImage" + index ) //TODO
       let img = $( "<img>" ).attr( "src", this.imageSrc ).addClass( "img-fluid image w-100 h-100 shadow-1-strong rounded" );
       div.append( a.append( img ) );
-      rowDiv.append( div );
+      rowDiv_for_home.append( div );
       // This is for pop up section
       let modalDiv = $( "<div>" ).attr( "id", "GalleryImage" + index ).attr( "tabindex", "1" ).attr( "aria-labelledby", "GalleryImage" + index + "Label" ).attr( "aria-hidden", "true" ).addClass( "modal fade" );
 
@@ -22,19 +22,76 @@ function generateGalleryContent () {
       let buttonDiv = $( "<div>" ).addClass( "text-center p-3" );
       let button = $( "<button>" ).attr( "type", "button" ).attr( "data-bs-dismiss", "modal" ).addClass( "btn btn-danger w-100" ).append( "Close" );
       modalDiv.append( innerDiv.append( modalContentDiv.append( imgModalContent ).append( descrSpan ).append( buttonDiv.append( button ) ) ) )
-      rowDiv.append( modalDiv );
+      rowDiv_for_home.append( modalDiv );
 
     } );
     // you haven't touched the DOM yet, everything thus far has been in memory
-    $( "#toReplaceGallery" ).html( rowDiv ); // this is the only time you touch the DOM
+    $( "#toReplaceGallery" ).html( rowDiv_for_home ); // this is the only time you touch the DOM
   } ).fail( function () {
     console.error( "Failed to load the gallery images JSON file." );
   } );
 }
+async function getVideoTitle ( videoId ) {
+  var url = "https://www.youtube.com/watch?v=" + videoId;
+  var title;
+  await $.getJSON(
+    "https://noembed.com/embed",
+    { format: "json", url: url },
+    function ( data ) {
+      title = data.title;
+    }
+  );
+  return title;
+}
+
+function generatePoemsContent_for_home () {
+
+  let rowDiv_for_home = $( "<div>" ).addClass( "row justify-content-center" );
+  $.getJSON( 'assets/javascripts/poem-ids-small.json', function ( poems ) {
+
+
+    $.each( poems, function ( index ) {
+      let colDiv = $( "<div>" )
+        .addClass( "col-lg-2 col-md-4 col-sm-6 m-2 position-relative rounded p-2 border border-2 rounded shadow" );
+      // let colDiv = $( "<div>" ).addClass( "col-lg-2 col-md-3 mb-6 mb-lg-0 p-3" );
+      let imgDiv = $( "<div>" ).attr( "data-id", this.poemSrc ).attr( "data-ripple-color", "light" ).addClass( "bg-image hover-overlay ripple shadow-1-strong rounded video-holder" );
+      // let a = $("<a>").attr("href", "#!").attr("data-bs-toggle", "modal").attr("data-bs-target", "#VideoModal")
+      let a = $( "<a>" ).attr( "href", "https://www.youtube.com/watch?v=" + this.poemSrc ).attr( "target", "_blank" )
+      // console.log( this.poemTitle )
+      if ( this.poemTitle != '' && this.poemTitle != undefined ) {
+        let titleSpan = $( "<span>" ).addClass( "badge badge-pill bg-info poemTitle w-100" ).append( this.poemTitle );
+      }
+      let img = $( "<img>" ).attr( "src", "https://img.youtube.com/vi/" + this.poemSrc + "/hqdefault.jpg" ).addClass( "img-fluid image w-100 h-100 shadow-1-strong rounded" );
+      let ytImg = $( "<img>" ).attr( "src", "assets/images/play-button.png" ).addClass( "yt-play-image" ).addClass( "w-25" );
+
+      if ( this.poemTitle != '' && this.poemTitle != undefined ) {
+        rowDiv_for_home.append( colDiv.append( imgDiv.append( a.append( titleSpan ).append( img ).append( ytImg ) ) ) );
+      } else {
+        rowDiv_for_home.append( colDiv.append( imgDiv.append( a.append( img ).append( ytImg ) ) ) );
+      }
+
+
+    } );
+    // Add a Bootstrap-styled div acting as a link at the end
+    let linkDiv = $( "<div>" )
+      .addClass(
+        "text-center mt-4 p-3 bg-primary text-white rounded cursor-pointer"
+      )
+      .attr( "onclick", "window.location.href='poems.html#poems';" )
+      .text( "View All Poems" );
+
+    rowDiv_for_home.append( linkDiv );
+    $( "#toReplacePoems_for_home" ).html( rowDiv_for_home ); // this is the only time you touch the DOM
+  } ).fail( function () {
+    console.error( "Failed to load the gallery images JSON file." );
+  } );
+
+
+}
 
 function generateAwardsContent () {
 
-  let rowDiv = $( "<div>" ).addClass( "row justify-content-center" );
+  let rowDiv_for_home = $( "<div>" ).addClass( "row justify-content-center" );
   $.getJSON( 'assets/javascripts/award-images.json', function ( awardImages ) {
     $.each( awardImages, function ( index ) {
       // For thumbnails
@@ -44,7 +101,7 @@ function generateAwardsContent () {
       let a = $( "<a>" ).attr( "href", "#!" ).attr( "data-bs-toggle", "modal" ).attr( "data-bs-target", "#AwardImage" + index ) //TODO
       let img = $( "<img>" ).attr( "src", this.imageSrc ).addClass( "img-fluid image w-100 h-100 shadow-1-strong rounded" );
       div.append( a.append( img ) );
-      rowDiv.append( div );
+      rowDiv_for_home.append( div );
       // This is for pop up section
       let modalDiv = $( "<div>" ).attr( "id", "AwardImage" + index ).attr( "tabindex", "1" ).attr( "aria-labelledby", "AwardImage" + index + "Label" ).attr( "aria-hidden", "true" ).addClass( "modal fade" );
 
@@ -56,18 +113,18 @@ function generateAwardsContent () {
       let buttonDiv = $( "<div>" ).addClass( "text-center p-3" );
       let button = $( "<button>" ).attr( "type", "button" ).attr( "data-bs-dismiss", "modal" ).addClass( "btn btn-danger w-100" ).append( "Close" );
       modalDiv.append( innerDiv.append( modalContentDiv.append( imgModalContent ).append( descrSpan ).append( buttonDiv.append( button ) ) ) )
-      rowDiv.append( modalDiv );
+      rowDiv_for_home.append( modalDiv );
 
     } );
     // you haven't touched the DOM yet, everything thus far has been in memory
-    $( "#toReplaceAwards" ).html( rowDiv ); // this is the only time you touch the DOM
+    $( "#toReplaceAwards" ).html( rowDiv_for_home ); // this is the only time you touch the DOM
   } ).fail( function () {
     console.error( "Failed to load the Awards images JSON file." );
   } );
 }
 function generateBooksContent () {
 
-  let rowDiv = $( "<div>" ).addClass( "row justify-content-center" );
+  let rowDiv_for_home = $( "<div>" ).addClass( "row justify-content-center" );
   $.getJSON( 'assets/javascripts/book-images.json', function ( bookImages ) {
     $.each( bookImages, function ( index ) {
       // For thumbnails
@@ -77,7 +134,7 @@ function generateBooksContent () {
       let a = $( "<a>" ).attr( "href", "#!" ).attr( "data-bs-toggle", "modal" ).attr( "data-bs-target", "#BookImage" + index ) //TODO
       let img = $( "<img>" ).attr( "src", this.imageSrc ).addClass( "img-fluid image w-100 h-100 shadow-1-strong rounded" );
       div.append( a.append( img ) );
-      rowDiv.append( div );
+      rowDiv_for_home.append( div );
       // This is for pop up section
       let modalDiv = $( "<div>" ).attr( "id", "BookImage" + index ).attr( "tabindex", "1" ).attr( "aria-labelledby", "BookImage" + index + "Label" ).attr( "aria-hidden", "true" ).addClass( "modal fade" );
 
@@ -89,11 +146,11 @@ function generateBooksContent () {
       let buttonDiv = $( "<div>" ).addClass( "text-center p-3" );
       let button = $( "<button>" ).attr( "type", "button" ).attr( "data-bs-dismiss", "modal" ).addClass( "btn btn-danger w-100" ).append( "Close" );
       modalDiv.append( innerDiv.append( modalContentDiv.append( imgModalContent ).append( descrSpan ).append( buttonDiv.append( button ) ) ) )
-      rowDiv.append( modalDiv );
+      rowDiv_for_home.append( modalDiv );
 
     } );
     // you haven't touched the DOM yet, everything thus far has been in memory
-    $( "#toReplaceBooks" ).html( rowDiv ); // this is the only time you touch the DOM
+    $( "#toReplaceBooks" ).html( rowDiv_for_home ); // this is the only time you touch the DOM
   } ).fail( function () {
     console.error( "Failed to load the gallery images JSON file." );
   } );
@@ -133,6 +190,7 @@ $( "#VideoModal" ).on( "hidden.bs.modal", function ( e ) {
   generateGalleryContent();
   generateAwardsContent();
   generateBooksContent();
+  generatePoemsContent_for_home();
 
   /**
    * Easy selector helper function
