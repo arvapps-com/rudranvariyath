@@ -53,5 +53,10 @@
         "imageSrc": "assets/images/awards/awards_11.jpg",
         "imageTitle": "Bharat Sevak Samaj",
         "imageDescription": "Bharat Sevak Samaj"
+    },
+    {
+        "imageSrc": "assets/images/awards/awards_12.jpg",
+        "imageTitle": "Vayalar Kala Samskarika Vedi",
+        "imageDescription": "Vayalar Kala Samskarika Vedi"
     }
 ]
