@@ -25,34 +25,18 @@ function generatePoemsContent () {
       // let a = $("<a>").attr("href", "#!").attr("data-bs-toggle", "modal").attr("data-bs-target", "#VideoModal")
       let a = $( "<a>" ).attr( "href", "https://www.youtube.com/watch?v=" + this.poemSrc ).attr( "target", "_blank" )
       // console.log( this.poemTitle )
-      if ( this.poemTitle != '' && this.poemTitle != undefined ) {
-        let titleSpan = $( "<span>" ).addClass( "badge badge-pill bg-info poemTitle w-100" ).append( this.poemTitle );
-      }
       let img = $( "<img>" ).attr( "src", "https://img.youtube.com/vi/" + this.poemSrc + "/hqdefault.jpg" ).addClass( "img-fluid image w-100 h-100 shadow-1-strong rounded" );
       let ytImg = $( "<img>" ).attr( "src", "assets/images/play-button.png" ).addClass( "yt-play-image" ).addClass( "w-25" );
-      // if (this.poemLyrics != '' && this.poemLyrics != undefined) {
-      //   // lyrics button
-      //   let lyricsTitleA = $("<a>").attr("href", "#!").attr("data-bs-toggle", "modal").attr("data-bs-target", "#Lyrics" + index);
-      //   let lyricsPopupBtnDiv = $("<div>").addClass("badge badge-pill bg-danger w-100").append("Read this poem");
-      //   //Lyrics pop up
-      //   let lyricsModalDiv = $("<div>").attr("id", "Lyrics" + index).attr("tabindex", "1").attr("aria-labelledby", "Lyrics" + index + "Label").attr("aria-hidden", "true").addClass("modal fade");
-      //   let lyricsDialogDiv = $("<div>").addClass("modal-dialog modal-xl modal-dialog-centered");
-      //   let lyricsModalContentDiv = $("<div>").addClass("modal-content");
-      //   let lyricsPopUpSpan = $("<span>").attr("id", "popupTitle").addClass("badge badge-pill bg-info poemTitle")
-      //   let lyricsContentP = $("<p>").addClass("p-3 text-center");
-      //   let lyricsBtnDiv = $("<div>").addClass("text-center py-3");
-      //   let lyricsBtn = $("<button>").attr("type", "button").attr("data-bs-dismiss", "modal").addClass("btn btn-secondary").append("Close");
-      //   // combining all to the row div
-      //   rowDiv.append(colDiv.append(imgDiv.append(a.append(titleSpan).append(img).append(ytImg)).append(lyricsTitleA.append(lyricsPopupBtnDiv))));
-      //   rowDiv.append(lyricsModalDiv.append(lyricsDialogDiv.append(lyricsModalContentDiv.append(lyricsPopUpSpan).append(lyricsContentP.append(lyricsBtnDiv.append(lyricsBtn))))))
-      // }
-      // else {
+
       if ( this.poemTitle != '' && this.poemTitle != undefined ) {
+        let titleSpan = $( "<span>" ).addClass( "badge badge-pill bg-info poemTitle w-100" ).append( this.poemTitle );
+        if ( index < 5 ) {
+          titleSpan.append( $( "<span>" ).addClass( "badge bg-danger ms-2" ).text( "New" ) );
+        }
         rowDiv.append( colDiv.append( imgDiv.append( a.append( titleSpan ).append( img ).append( ytImg ) ) ) );
       } else {
         rowDiv.append( colDiv.append( imgDiv.append( a.append( img ).append( ytImg ) ) ) );
       }
-      // }
 
     } );
   } ).fail( function () {

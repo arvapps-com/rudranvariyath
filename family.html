@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+        <title>Rudran Variyath - Family Tree</title>
+        <meta content="" name="description">
+        <meta content="" name="keywords">
+
+        <!-- Favicons -->
+        <link href="assets/images/favicon.png" rel="icon">
+        <link href="assets/images/apple-touch-icon.png" rel="apple-touch-icon">
+
+        <!-- Google Fonts -->
+        <link
+            href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+            rel="stylesheet">
+
+        <!-- Vendor CSS Files -->
+        <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+        <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+        <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+        <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+        <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+        <!-- Template Main CSS File -->
+        <link href="assets/css/style.css" rel="stylesheet">
+        <link href="assets/css/familytree.css" rel="stylesheet">
+
+    </head>
+
+    <body>
+
+        <!-- ======= Mobile nav toggle button ======= -->
+        <i class="bi bi-list mobile-nav-toggle d-xl-none"></i>
+
+        <!-- ======= Header ======= -->
+        <header id="header">
+            <div class="d-flex flex-column">
+
+                <div class="profile">
+                    <a href="index.html"><img src="assets/images/avatars/avatar.jpg" alt=""
+                            class="img-fluid rounded-circle"></a>
+                    <h1 class="text-light"><a href="index.html">Rudran Variyath</a></h1>
+                    <div class="social-links mt-3 text-center">
+                        <a href="https://twitter.com/rudranvariyath" target="_blank" class="twitter"><i
+                                class="bx bxl-twitter" title="Follow me on Twitter"></i></a>
+                        <a href="https://www.facebook.com/rudran.variyath" target="_blank" class="facebook"><i
+                                class="bx bxl-facebook" title="Follow me on Facebook"></i></a>
+                        <a href="https://www.instagram.com/rudranvariyath/" target="_blank" class="instagram"><i
+                                class="bx bxl-instagram" title="Follow me on Instagram"></i></a>
+                    </div>
+                </div>
+
+                <nav id="navbar" class="nav-menu navbar">
+                    <ul>
+                        <li><a href="index.html" class="nav-link scrollto"><i class="bx bx-home"></i>
+                                <span>Home</span></a></li>
+                        <li><a href="index.html#about" class="nav-link scrollto"><i class="bx bx-user"></i>
+                                <span>About</span></a></li>
+                        <li><a href="poems.html#poems" class="nav-link scrollto"><i class="bx bx-pen"></i>
+                                <span>Poems</span></a></li>
+                        <li><a href="index.html#books" class="nav-link scrollto"><i class="bx bx-book"></i>
+                                <span>Books</span></a>
+                        </li>
+                        <li><a href="index.html#awards" class="nav-link scrollto"><i class="bx bx-images"></i>
+                                <span>Awards</span></a>
+                        </li>
+                        <li><a href="#family" class="nav-link scrollto active"><i class="bx bx-tree"></i> <span>Family
+                                    Tree</span></a></li>
+                        <li><a href="index.html#gallery" class="nav-link scrollto"><i class="bx bx-images"></i>
+                                <span>Gallery</span></a>
+                        </li>
+
+                        <li><a href="#contact" class="nav-link scrollto" target=><i class="bx bx-envelope"></i>
+                                <span>Contact</span></a>
+                        </li>
+                    </ul>
+                </nav><!-- .nav-menu -->
+            </div>
+        </header><!-- End Header -->
+
+        <main id="main">
+
+            <!-- ======= Breadcrumbs ======= -->
+            <section class="breadcrumbs">
+                <div class="container">
+
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h2>Family Tree</h2>
+                        <ol>
+                            <li><a href="index.html">Home</a></li>
+                            <li>Family Tree</li>
+                        </ol>
+                    </div>
+
+                </div>
+            </section><!-- End Breadcrumbs -->
+
+            <section id="family" class="family-tree section-bg">
+                <div class="container">
+                    <div class="section-title">
+                        <h2>Family Tree</h2>
+                        <p>Learn more about the family lineage.</p>
+                    </div>
+
+                    <!-- Family Tree Container -->
+                    <div id="tree-wrapper"
+                        style="width: 100%; height: 700px; overflow: hidden; border: 1px solid #eee; position: relative; background: #f9f9f9; border-radius: 8px; box-shadow: inset 0 0 10px rgba(0,0,0,0.05);">
+                        <div id="family-tree-container" class="tree" style="transform-origin: 0 0; cursor: grab;"></div>
+
+                        <!-- Zoom Controls -->
+                        <div class="zoom-controls" style="position: absolute; bottom: 20px; right: 20px; z-index: 100;">
+                            <button class="btn btn-light shadow-sm" onclick="zoomIn()"><i
+                                    class="bi bi-plus-lg"></i></button>
+                            <button class="btn btn-light shadow-sm" onclick="zoomOut()"><i
+                                    class="bi bi-dash-lg"></i></button>
+                            <button class="btn btn-light shadow-sm" onclick="resetZoom()"><i
+                                    class="bi bi-arrow-counterclockwise"></i></button>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+        </main><!-- End #main -->
+
+        <!-- ======= Footer ======= -->
+        <footer id="footer">
+            <div class="container">
+                <div class="copyright">
+                    &copy; Copyright <strong><span>Arun R Variyath</a></span></strong>
+                </div>
+            </div>
+        </footer><!-- End  Footer -->
+
+        <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+                class="bi bi-arrow-up-short"></i></a>
+
+        <!-- Vendor JS Files -->
+        <script src="assets/vendor/purecounter/purecounter.js"></script>
+        <script src="assets/vendor/aos/aos.js"></script>
+        <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+        <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+        <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+        <script src="assets/vendor/typed.js/typed.min.js"></script>
+        <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js"
+            integrity="sha512-n/4gHW3atM3QqRcbCn6ewmpxcLAHGaDjpEBu4xZd47N0W2oQ+6q7oc3PXstrJYXcbNU1OHdQ1T7pAP+gi5Yu8g=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <!-- Template Main JS File -->
+        <script src="assets/javascripts/main.js"></script>
+
+        <!-- Family Data and Renderer -->
+        <script src="assets/javascripts/family-data.js"></script>
+        <script src="assets/javascripts/render-tree.js"></script>
+
+        <script>
+            // Initialize AOS
+            AOS.init();
+        </script>
+    </body>
+
+</html>

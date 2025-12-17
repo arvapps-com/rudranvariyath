@@ -58,13 +58,14 @@ function generatePoemsContent_for_home () {
       // let a = $("<a>").attr("href", "#!").attr("data-bs-toggle", "modal").attr("data-bs-target", "#VideoModal")
       let a = $( "<a>" ).attr( "href", "https://www.youtube.com/watch?v=" + this.poemSrc ).attr( "target", "_blank" )
       // console.log( this.poemTitle )
-      if ( this.poemTitle != '' && this.poemTitle != undefined ) {
-        let titleSpan = $( "<span>" ).addClass( "badge badge-pill bg-info poemTitle w-100" ).append( this.poemTitle );
-      }
       let img = $( "<img>" ).attr( "src", "https://img.youtube.com/vi/" + this.poemSrc + "/hqdefault.jpg" ).addClass( "img-fluid image w-100 h-100 shadow-1-strong rounded" );
       let ytImg = $( "<img>" ).attr( "src", "assets/images/play-button.png" ).addClass( "yt-play-image" ).addClass( "w-25" );
 
       if ( this.poemTitle != '' && this.poemTitle != undefined ) {
+        let titleSpan = $( "<span>" ).addClass( "badge badge-pill bg-info poemTitle w-100" ).append( this.poemTitle );
+        if ( index < 5 ) {
+          titleSpan.append( $( "<span>" ).addClass( "badge bg-danger ms-2" ).text( "New" ) );
+        }
         rowDiv_for_home.append( colDiv.append( imgDiv.append( a.append( titleSpan ).append( img ).append( ytImg ) ) ) );
       } else {
         rowDiv_for_home.append( colDiv.append( imgDiv.append( a.append( img ).append( ytImg ) ) ) );

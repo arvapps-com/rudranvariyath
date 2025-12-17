@@ -1,0 +1,283 @@
+/* ==========================================================================
+   Custom Hierarchical Family Tree CSS
+   ========================================================================== */
+
+/* Tree Container */
+.tree {
+    white-space: nowrap;
+    padding: 50px;
+    display: inline-block; /* Allows width to grow */
+    min-width: 100%;
+}
+
+/* ... (previous code) ... */
+
+/* ADJUSTMENT FOR COUPLES (Child + Spouse) */
+/* We want the vertical line to land on the Primary Node (Left), not effectively center */
+
+/* Shift the connecting point (where ::before and ::after meet) to the left */
+.tree li.has-spouse::before {
+    /* 
+       Logic: 
+       Normal center is 50%. 
+       We have an extra [Connector 40px] + [Spouse 200px + padding] on the right.
+       Total extra width on right ~ 260px.
+       We want center to move Left by half of that? ~ 130px.
+    */
+    right: calc(50% + 120px);
+    width: calc(50% + 120px);
+}
+
+.tree li.has-spouse::after {
+    left: calc(50% - 120px);
+    width: calc(50% + 120px);
+}
+
+/* Also need to handle the case where it's the Last or First child, to remove excess borders */
+.tree li.has-spouse:last-child::before {
+    border-right: 2px solid #555;
+    border-radius: 0 5px 0 0;
+    /* We need to ensure the border-right is at the new center */
+    /* This overrides the default right:auto/left:50% hidden logic? */
+    /* Actually ::before controls the Left Branch coming from Top Center to Left. */
+    /* ::after controls Right Branch. */
+    
+    /* If Last Child: We only have ::before. ::after is hidden. 
+       The ::before line creates the corner. 
+       We extended it to right: calc(50% + 120px). 
+       So the corner is now shifted left. Correct. 
+    */
+}
+
+.tree li.has-spouse:first-child::after {
+    /* First Child: Only ::after. 
+       We changed left to calc(50% - 120px).
+       So the corner starts earlier. Correct.
+    */
+    border-radius: 5px 0 0 0;
+}
+
+/* Special fix for the lines connecting to the box top */
+/* The vertical line from parent (ul ul::before) drops to the <li> top center.
+   Wait, the lines above (::before/::after) create the "Horizontal Bar" of the tree?
+   No, they create the horizontal bar FROM the sibling line TO the child.
+   
+   Parent
+     |
+   -----------------  <-- nesting UL padding? No.
+   |       |       |
+ Child1  Child2  Child3
+ 
+ The vertical lines above children are essentially the borders of LI::before/after?
+ No. 
+ CSS Tree Logic:
+ LI::before = Line from Top Center to Right Edge? No.
+ LI::before = Top Border. width 50%. Right 50%. (Left Half of top bar).
+ LI::after = Top Border. width 50%. Left 50%. (Right Half of top bar).
+ Vertical Line is 'border-left' of ::after (centered at 50%) or 'border-right' of ::before.
+ 
+ Actually in my CSS:
+ .tree li::after { border-left: 2px solid #555; } -> This creates the Vertical Line dropping TO the child box.
+ It is positioned at left: 50%.
+ 
+ SO, if I change `left` of `::after` to `calc(50% - 120px)`, the vertical line MOVES LEFT.
+ This is exactly what we want! 
+ It will land on the Primary Box.
+ 
+ */
+
+
+.tree ul {
+    padding-top: 45px; /* Matched to connector height */
+    position: relative;
+    transition: all 0.5s;
+    display: flex;
+    justify-content: center;
+}
+
+
+
+/* Connectors (Lines) - Darker and Taller for Overlap */
+.tree li::before, .tree li::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 50%;
+    border-top: 2px solid #555; /* Darker line */
+    width: 50%;
+    height: 50px; /* Overlap by 5px (padding is 45px) */
+    z-index: -1;
+}
+
+.tree li::after {
+    right: auto;
+    left: 50%;
+    border-left: 2px solid #555;
+    border-top: 2px solid #555; /* Ensure top border continuity */
+}
+    
+/* The vertical line dropping down from parents to children */
+.tree ul ul::before {
+    content: '';
+    position: absolute;
+    top: 0; 
+    left: 50%;
+    border-left: 2px solid #555;
+    width: 0;
+    height: 50px; /* Overlap by 5px */
+    z-index: 1;
+}
+
+/* Ensure the lines connect deeply into the box */
+.tree li {
+    float: left;
+    text-align: center;
+    list-style-type: none;
+    position: relative;
+    padding: 45px 20px 0 20px; /* Increased side padding to prevent box collision */
+    transition: all 0.5s;
+}
+
+/* Remove connectors from the single root to avoid lines above it */
+.tree li:only-child::after, .tree li:only-child::before {
+    display: none;
+}
+/* But keeping padding allows consistent spacing */
+/*.tree li:only-child { padding-top: 0; }  <-- Removed optimization to ensure consistent vertical line drop */
+
+/* Remove external connectors from first and last nodes to create the 'branch' effect */
+.tree li:first-child::before, .tree li:last-child::after {
+    border: 0 none;
+}
+.tree li:last-child::before {
+    border-right: 2px solid #555;
+    border-radius: 0 5px 0 0;
+}
+.tree li:first-child::after {
+    border-radius: 5px 0 0 0;
+}
+
+/* MEMBER BOX STYLES */
+
+.member-container {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 10; /* Above lines */
+}
+
+/* Horizontal Line between spouses */
+.spouse-connector {
+    width: 40px;
+    height: 2px;
+    background-color: #333; /* Darker line for marriage */
+    margin: 0 5px;
+}
+
+/* The Card */
+.member-box {
+    text-decoration: none;
+    color: #444;
+    font-family: 'Open Sans', sans-serif;
+    display: flex; /* Row layout for image + text */
+    flex-direction: row; 
+    align-items: center;
+    border: 1px solid #ddd;
+    background: #fff;
+    padding: 5px;
+    position: relative;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: all 0.3s;
+    width: 200px; /* Fixed width */
+    height: 80px; /* Fixed height */
+    text-align: left;
+}
+
+.member-box:hover {
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    transform: translateY(-2px);
+    border-color: #aaa;
+    z-index: 20;
+}
+
+/* Male - Rectangle (Default) */
+.member-box.male {
+    border-radius: 2px;
+    border-left: 4px solid #64b5f6; /* Blue Accent */
+}
+
+/* Female - Rounded/Pill Shape */
+.member-box.female {
+    border-radius: 50px; /* Fully rounded ends */
+    border-left: 4px solid #f06292; /* Pink Accent */
+    
+    /* For female, we might want Image on Left, Text on Right still, but the shape surrounds them */
+    justify-content: flex-start;
+    padding-left: 5px;
+}
+
+/* Image Styles */
+.member-image {
+    width: 60px;
+    height: 60px;
+    flex-shrink: 0;
+    margin-right: 10px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #eee;
+}
+
+.member-box.male .member-image {
+    border-radius: 2px;
+}
+
+.member-box.female .member-image {
+    border-radius: 50%; /* Circle avatar for female */
+    width: 65px; /* Slightly larger visual */
+    height: 65px;
+    border: 2px solid #fce4ec;
+}
+
+.member-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Text Styles */
+.member-info {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.member-name {
+    font-weight: 700;
+    font-size: 13px;
+    color: #333;
+    line-height: 1.2;
+    margin-bottom: 2px;
+}
+
+.member-role {
+    font-size: 11px;
+    color: #888;
+    font-style: italic;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Hover effects for path tracing (Advanced CSS Selectors) */
+.member-container:hover+ul li::after, 
+.member-container:hover+ul li::before, 
+.member-container:hover+ul::before, 
+.member-container:hover+ul ul::before {
+    border-color: #999;
+    border-width: 3px;
+}
+
