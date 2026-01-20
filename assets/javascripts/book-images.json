@@ -15,7 +15,7 @@
         "imageDescription": "Nilav"
     },
     {
-        "imageSrc": "assets/images/books/Naalamyamam.jpg",
+        "imageSrc": "assets/images/books/naalam_yamam.jpg",
         "imageTitle": "Naalamyamam",
         "imageDescription": "Naalamyamam"
     },
@@ -23,5 +23,10 @@
         "imageSrc": "assets/images/books/Inayumothorunaal.jpg",
         "imageTitle": "Inayumothorunaal",
         "imageDescription": "Inayumothorunaal"
+    },
+    {
+        "imageSrc": "assets/images/books/kaliyugakazhchakal.jpg",
+        "imageTitle": "Kaliyugakazhchakal",
+        "imageDescription": "Kaliyugakazhchakal"
     }
 ]
