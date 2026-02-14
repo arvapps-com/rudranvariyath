@@ -10,6 +10,8 @@ body {
 section {
   content-visibility: auto;
   contain-intrinsic-size: 1px 500px;
+}
+
 .back-to-top {
   position: fixed;
   visibility: hidden;
