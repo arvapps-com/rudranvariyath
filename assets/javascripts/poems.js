@@ -1,13 +1,17 @@
 async function getVideoTitle(videoId) {
   var url = "https://www.youtube.com/watch?v=" + videoId;
   var title;
-  await $.getJSON(
-    "https://noembed.com/embed",
-    { format: "json", url: url },
-    function (data) {
-      title = data.title;
-    }
-  );
+  try {
+    await $.getJSON(
+      "https://noembed.com/embed",
+      { format: "json", url: url },
+      function (data) {
+        title = data.title;
+      }
+    ).fail(() => { title = "Poem Video"; });
+  } catch (e) {
+    title = "Poem Video";
+  }
   return title;
 }
 
