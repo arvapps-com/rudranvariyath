@@ -20,7 +20,7 @@ function generateGalleryContent () {
       let modalDiv = $( "<div>" ).attr( "id", "GalleryImage" + index ).attr( "tabindex", "-1" ).attr( "aria-labelledby", "GalleryImage" + index + "Label" ).attr( "aria-hidden", "true" ).addClass( "modal fade" );
 
       let innerDiv = $( "<div>" ).addClass( "modal-dialog modal-lg" );
-      let modalContentDiv = $( "<div>" ).addClass( "modal-content col-lg-2 col-md-4 col-sm-4 m-3  position-relative rounded p-3" );
+      let modalContentDiv = $( "<div>" ).addClass( "modal-content p-3" );
       let imgModalContent = $( "<img>" )
         .attr( "src", this.imageSrc )
         .attr( "loading", "lazy" )
@@ -128,7 +128,7 @@ function generateAwardsContent () {
       let modalDiv = $( "<div>" ).attr( "id", "AwardImage" + index ).attr( "tabindex", "-1" ).attr( "aria-labelledby", "AwardImage" + index + "Label" ).attr( "aria-hidden", "true" ).addClass( "modal fade" );
 
       let innerDiv = $( "<div>" ).addClass( "modal-dialog modal-lg" );
-      let modalContentDiv = $( "<div>" ).addClass( "modal-content col-lg-2 col-md-4 col-sm-4 m-3  position-relative rounded p-3" );
+      let modalContentDiv = $( "<div>" ).addClass( "modal-content p-3" );
       let imgModalContent = $( "<img>" )
         .attr( "src", this.imageSrc )
         .attr( "loading", "lazy" )
@@ -155,31 +155,47 @@ function generateBooksContent () {
     $.each( bookImages, function ( index ) {
       // For thumbnails
       let div = $( "<div>" )
-        .addClass( "col-lg-2 col-md-3 col-sm-2 m-3 position-relative rounded p-3 border border-2 rounded shadow" );
+        .addClass( "col-lg-3 col-md-4 col-sm-6 m-3 position-relative rounded p-3 border border-2 rounded shadow book-card text-center" );
 
       let a = $( "<a>" ).attr( "href", "#!" ).attr( "data-bs-toggle", "modal" ).attr( "data-bs-target", "#BookImage" + index )
       let img = $( "<img>" )
         .attr( "src", this.imageSrc )
         .attr( "loading", "lazy" )
         .attr( "decoding", "async" )
-        .addClass( "img-fluid image w-100 h-100 shadow-1-strong rounded" );
-      div.append( a.append( img ) );
+        .addClass( "img-fluid image w-100 shadow-1-strong rounded mb-2" )
+        .css("aspect-ratio", "2/3")
+        .css("object-fit", "cover");
+      
+      let title = $("<h5>").addClass("mb-2").text(this.imageTitle);
+      
+      let buyBtn = $("<button>")
+        .addClass("btn btn-success w-100 buy-now-btn mb-1")
+        .attr("data-title", this.imageTitle)
+        .html("<i class='bi bi-cart-fill me-2'></i>Buy Now @ ₹100");
+
+      div.append( a.append( img ) ).append(title).append(buyBtn);
       rowDiv_for_home.append( div );
+      
       // This is for pop up section
       let modalDiv = $( "<div>" ).attr( "id", "BookImage" + index ).attr( "tabindex", "-1" ).attr( "aria-labelledby", "BookImage" + index + "Label" ).attr( "aria-hidden", "true" ).addClass( "modal fade" );
 
       let innerDiv = $( "<div>" ).addClass( "modal-dialog modal-lg" );
-      let modalContentDiv = $( "<div>" ).addClass( "modal-content col-lg-2 col-md-4 col-sm-4 m-3  position-relative rounded p-3" );
+      let modalContentDiv = $( "<div>" ).addClass( "modal-content p-3" );
       let imgModalContent = $( "<img>" )
         .attr( "src", this.imageSrc )
         .attr( "loading", "lazy" )
         .attr( "decoding", "async" )
         .addClass( "img-fluid image shadow-1-strong rounded" );
 
-      let descrSpan = $( "<span>" ).attr( "style", "width: 100%;" ).addClass( "badge bg-primary text-center" ).append( this.imageDescription );//TODO
-      let buttonDiv = $( "<div>" ).addClass( "text-center p-3" );
+      let descrSpan = $( "<span>" ).attr( "style", "width: 100%;" ).addClass( "badge bg-primary text-center mt-3" ).append( this.imageDescription );//TODO
+      let buyBtnModal = $("<button>")
+        .addClass("btn btn-success w-100 buy-now-btn mt-3 mb-2")
+        .attr("data-title", this.imageTitle)
+        .html("<i class='bi bi-cart-fill me-2'></i>Buy Now @ ₹100");
+      let buttonDiv = $( "<div>" ).addClass( "text-center" );
       let button = $( "<button>" ).attr( "type", "button" ).attr( "data-bs-dismiss", "modal" ).addClass( "btn btn-danger w-100" ).append( "Close" );
-      modalDiv.append( innerDiv.append( modalContentDiv.append( imgModalContent ).append( descrSpan ).append( buttonDiv.append( button ) ) ) )
+      
+      modalDiv.append( innerDiv.append( modalContentDiv.append( imgModalContent ).append( descrSpan ).append(buyBtnModal).append( buttonDiv.append( button ) ) ) )
       rowDiv_for_home.append( modalDiv );
 
     } );
@@ -188,6 +204,81 @@ function generateBooksContent () {
   } ).fail( function () {
     console.error( "Failed to load the gallery images JSON file." );
   } );
+}
+
+/**
+ * Payment Modal Generation and Handling
+ */
+function initializePaymentModal() {
+  if ($("#paymentModal").length === 0) {
+    const paymentModalHtml = `
+      <div class="modal fade payment-modal" id="paymentModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content border-0 shadow-lg">
+            <div class="payment-header">
+              <h4 class="modal-title mb-0" id="paymentModalTitle">Complete Purchase</h4>
+              <p class="mb-0 opacity-75">Secure UPI Payment</p>
+            </div>
+            <div class="modal-body text-center p-4">
+              <div class="qr-container mb-4">
+                <div class="qr-wrapper p-3 bg-white rounded shadow-sm d-inline-block">
+                  <img id="paymentQr" src="" alt="UPI QR Code" class="img-fluid qr-code" style="width: 200px; height: 200px;">
+                </div>
+                <div class="mt-3">
+                  <span class="upi-id select-all">rudranvariyath-2@okaxis</span>
+                  <p class="small text-muted mt-2 mb-0">Scan this QR using any UPI App (GPay, PhonePe, Paytm)</p>
+                </div>
+              </div>
+              
+              <div class="payment-info mb-4">
+                <div class="d-flex justify-content-between border-bottom pb-2 mb-2">
+                  <span>Amount to Pay:</span>
+                  <span class="fw-bold text-success">₹100</span>
+                </div>
+                <p class="text-muted small">Once paid, please send a screenshot of the transaction to confirm your order.</p>
+              </div>
+
+              <a id="whatsappLink" href="#" target="_blank" class="whatsapp-link w-100 justify-content-center">
+                <i class="bi bi-whatsapp me-2"></i> Send Screenshot on WhatsApp
+              </a>
+            </div>
+            <div class="modal-footer border-0 pt-0">
+              <button type="button" class="btn btn-light w-100" data-bs-dismiss="modal">Cancel</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+    $("body").append(paymentModalHtml);
+  }
+
+  $(document).on("click", ".buy-now-btn", function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    // If opened from another modal, close that first
+    $(".modal").modal("hide");
+    
+    const title = $(this).attr("data-title");
+    const upiId = "rudranvariyath-2@okaxis";
+    const amount = "100";
+    const whatsapp = "+91 1234567890";
+    
+    $("#paymentModalTitle").text("Buy " + title);
+    
+    // Generate UPI URL for QR
+    const upiUrl = `upi://pay?pa=${upiId}&pn=Rudran%20Variyath&am=${amount}&cu=INR&tn=Purchase of ${title}`;
+    const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(upiUrl)}&color=173b6c&bgcolor=ffffff&margin=1`;
+    
+    $("#paymentQr").attr("src", qrApiUrl);
+    
+    const waMessage = encodeURIComponent(`Hi, I've just paid ₹${amount} for the book "${title}". Here is my payment screenshot.`);
+    $("#whatsappLink").attr("href", `https://wa.me/${whatsapp.replace(/[^0-9]/g, '')}?text=${waMessage}`);
+    
+    setTimeout(() => {
+        $("#paymentModal").modal("show");
+    }, 400);
+  });
 }
 
 function _calculateAge ( birthday ) {
@@ -225,6 +316,7 @@ $( "#VideoModal" ).on( "hidden.bs.modal", function ( e ) {
   generateAwardsContent();
   generateBooksContent();
   generatePoemsContent_for_home();
+  initializePaymentModal();
 
   /**
    * Easy selector helper function
