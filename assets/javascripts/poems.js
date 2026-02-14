@@ -104,26 +104,81 @@ function generatePoemsContent() {
     var videoModal = document.getElementById('VideoModal');
     if (videoModal) {
       videoModal.addEventListener('show.bs.modal', function (event) {
+        closeMiniPlayer(); // Close mini player if opening a new video
         // Button that triggered the modal
         var button = event.relatedTarget;
         // Extract info from data-* attributes
         var videoSrc = button.getAttribute('data-video-src');
         // Update the modal's content.
         var iframe = videoModal.querySelector('#videoFrame');
-        iframe.src = videoSrc;
+        if (iframe) iframe.src = videoSrc;
       });
 
       videoModal.addEventListener('hidden.bs.modal', function (event) {
-        // Stop video on close by resetting src
-        var iframe = videoModal.querySelector('#videoFrame');
-        iframe.src = "";
+        if (!window.closingMiniPlayer) {
+          showMiniPlayer();
+        }
+        $('.modal-backdrop').remove();
+        $('body').removeClass('modal-open').css('overflow', '');
       });
+    }
+
+    // Mini Player Helpers for poems.js
+    if ($('.mini-player-container').length === 0) {
+        $("body").append(`
+          <div class="mini-player-container">
+            <div class="mini-player-header">
+                <button class="mini-player-btn" onclick="restoreVideo()"><i class="bi bi-fullscreen"></i></button>
+                <button class="mini-player-btn" onclick="closeMiniPlayer()"><i class="bi bi-x-lg"></i></button>
+            </div>
+            <div class="ratio ratio-16x9">
+                <iframe id="miniPlayerFrame" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+          </div>
+        `);
     }
 
   }).fail(function () {
     console.error("Failed to load the poem-ids JSON file.");
   });
 }
+
+function showMiniPlayer() {
+    const iframe = $('#videoFrame');
+    const src = iframe.attr('src');
+    if (src && src !== '#' && src !== '') {
+        $('#miniPlayerFrame').attr('src', src);
+        $('.mini-player-container').addClass('active');
+        iframe.attr('src', '#'); 
+    }
+}
+
+function closeMiniPlayer() {
+    window.closingMiniPlayer = true;
+    $('#miniPlayerFrame').attr('src', '');
+    $('.mini-player-container').removeClass('active');
+    setTimeout(() => { window.closingMiniPlayer = false; }, 500);
+}
+
+window.restoreVideo = function() {
+    const miniIframe = $('#miniPlayerFrame');
+    const src = miniIframe.attr('src');
+    if (src) {
+        const iframe = document.querySelector('#videoFrame');
+        if (iframe) iframe.src = src;
+        closeMiniPlayer();
+        const modal = bootstrap.Modal.getOrCreateInstance(document.getElementById('VideoModal'));
+        modal.show();
+    }
+};
+
+window.closeMiniPlayer = closeMiniPlayer;
+
+// Global listener for backdrop cleanup
+$(document).on('hidden.bs.modal', function() {
+    $('.modal-backdrop').remove();
+    $('body').removeClass('modal-open').css('overflow', '');
+});
 
 // Initialize when document is ready
 $(function() {

@@ -23,14 +23,16 @@ function generatePoemsContent_for_home () {
       let imgDiv = $( "<div>" ).attr( "data-id", this.poemSrc ).addClass( "bg-image hover-overlay ripple shadow-1-strong rounded video-holder" );
       let a = $( "<a>" ).attr( "href", "https://www.youtube.com/watch?v=" + this.poemSrc ).attr( "target", "_blank" );
       let img = $( "<img>" ).attr( "src", "https://img.youtube.com/vi/" + this.poemSrc + "/hqdefault.jpg" ).addClass( "img-fluid image w-100 h-100 shadow-1-strong rounded" );
-      let ytImg = $( "<img>" ).attr( "src", "assets/images/play-button.webp" ).addClass( "yt-play-image w-25" );
+      let playBtn = $( "<div>" ).addClass( "play-btn" );
+      
+      let modalA = $( "<a>" ).attr( "href", "#!" ).attr( "data-bs-toggle", "modal" ).attr( "data-bs-target", "#VideoModal" );
 
       if ( this.poemTitle != '' && this.poemTitle != undefined ) {
         let titleSpan = $( "<span>" ).addClass( "badge badge-pill bg-info poemTitle w-100" ).append( this.poemTitle );
         if ( index < 5 ) titleSpan.append( $( "<span>" ).addClass( "badge bg-danger ms-2" ).text( "New" ) );
-        rowDiv_for_home.append( colDiv.append( imgDiv.append( a.append( titleSpan ).append( img ).append( ytImg ) ) ) );
+        rowDiv_for_home.append( colDiv.append( imgDiv.append( modalA.append( titleSpan ).append( img ).append( playBtn ) ) ) );
       } else {
-        rowDiv_for_home.append( colDiv.append( imgDiv.append( a.append( img ).append( ytImg ) ) ) );
+        rowDiv_for_home.append( colDiv.append( imgDiv.append( modalA.append( img ).append( playBtn ) ) ) );
       }
     });
     let linkDiv = $( "<div>" ).addClass( "text-center mt-4 p-3 bg-primary text-white rounded cursor-pointer" ).attr( "onclick", "window.location.href='poems.html#poems';" ).text( "View All Poems" );
@@ -41,16 +43,82 @@ function generatePoemsContent_for_home () {
 
 // Global listener to fix double backdrops (faded effect)
 $(document).on('hidden.bs.modal', function() {
+    // If we're closing the VideoModal, don't stop the video, move it to mini-player
+    if (this.id === 'VideoModal' && !window.closingMiniPlayer) {
+        showMiniPlayer();
+    }
     $('.modal-backdrop').remove();
     $('body').removeClass('modal-open').css('overflow', '');
     $('.modal').removeClass('show').css('display', 'none');
-    // Ensure hidden modals are cleaned up from backdrop artifacts
+    
     setTimeout(() => {
         if ($('.modal.show').length === 0) {
             $('.modal-backdrop').remove();
         }
     }, 100);
 });
+
+function showMiniPlayer() {
+    const iframe = $('#videoFrame');
+    const src = iframe.attr('src');
+    if (src && src !== '#' && src !== '') {
+        $('#miniPlayerFrame').attr('src', src);
+        $('.mini-player-container').addClass('active');
+        iframe.attr('src', '#'); // Clear modal iframe
+    }
+}
+
+function closeMiniPlayer() {
+    window.closingMiniPlayer = true;
+    $('#miniPlayerFrame').attr('src', '');
+    $('.mini-player-container').removeClass('active');
+    setTimeout(() => { window.closingMiniPlayer = false; }, 500);
+}
+
+function initializePoemVideoModal() {
+    if ($("#VideoModal").length === 0) {
+        const videoModalHtml = `
+          <div class="modal fade" id="VideoModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-xl modal-dialog-centered">
+              <div class="modal-content bg-dark border-0 overflow-hidden" style="border-radius: 12px;">
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="modal-title text-white" id="popupTitle">Poem Video</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-0">
+                  <div class="ratio ratio-16x9">
+                    <iframe id="videoFrame" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="mini-player-container">
+            <div class="mini-player-header">
+                <button class="mini-player-btn" onclick="restoreVideo()"><i class="bi bi-fullscreen"></i></button>
+                <button class="mini-player-btn" onclick="closeMiniPlayer()"><i class="bi bi-x-lg"></i></button>
+            </div>
+            <div class="ratio ratio-16x9">
+                <iframe id="miniPlayerFrame" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+          </div>
+        `;
+        $("body").append(videoModalHtml);
+    }
+}
+
+window.restoreVideo = function() {
+    const miniIframe = $('#miniPlayerFrame');
+    const src = miniIframe.attr('src');
+    if (src) {
+        $('#videoFrame').attr('src', src);
+        closeMiniPlayer();
+        $("#VideoModal").modal('show');
+    }
+};
+
+window.closeMiniPlayer = closeMiniPlayer;
 
 const isLocalFile = window.location.protocol === 'file:';
 if (isLocalFile) {
@@ -289,10 +357,12 @@ function _calculateAge ( birthday ) {
 }
 $( document ).on( "click", ".video-holder", function () {
   var poemId = $( this ).data( "id" );
-  getVideoTitle( poemId ).then( ( data ) => $( "#popupTitle" ).text( data ) );
-  // to add custom close button
-  // getVideoTitle(poemId).then(data => $("#popupTitle").html(data+'<span class="badge badge-danger" data-bs-dismiss="modal">X</span>'));
-  $( "#VideoFrame" ).attr(
+  closeMiniPlayer(); // Close mini player if opening a new video
+  getVideoTitle( poemId ).then( ( data ) => {
+      $( "#popupTitle" ).text( data );
+      document.getElementById('VideoModal').querySelector('.modal-title').innerText = data;
+  });
+  $( "#videoFrame" ).attr(
     "src",
     "https://www.youtube.com/embed/" + poemId + "?autoplay=1"
   );
@@ -317,6 +387,7 @@ $( "#VideoModal" ).on( "hidden.bs.modal", function ( e ) {
   generateBooksContent();
   generatePoemsContent_for_home();
   initializePaymentModal();
+  initializePoemVideoModal();
 
   /**
    * Easy selector helper function
