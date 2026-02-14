@@ -43,7 +43,13 @@ function generatePoemsContent_for_home () {
 $(document).on('hidden.bs.modal', function() {
     $('.modal-backdrop').remove();
     $('body').removeClass('modal-open').css('overflow', '');
-    $('.modal').hide(); // Force hide all modals
+    $('.modal').removeClass('show').css('display', 'none');
+    // Ensure hidden modals are cleaned up from backdrop artifacts
+    setTimeout(() => {
+        if ($('.modal.show').length === 0) {
+            $('.modal-backdrop').remove();
+        }
+    }, 100);
 });
 
 const isLocalFile = window.location.protocol === 'file:';
@@ -99,7 +105,7 @@ function generateGalleryContent() {
         infoDiv.append(descrSpan);
 
         modalDiv.append(innerDiv.append(modalContentDiv.append(imgContainer).append(infoDiv)));
-        rowDiv.append(modalDiv);
+        $('body').append(modalDiv);
       });
 
       $("#toReplaceGallery").html(rowDiv);
@@ -153,7 +159,7 @@ function generateAwardsContent() {
         infoDiv.append(descrSpan);
 
         modalDiv.append(innerDiv.append(modalContentDiv.append(imgContainer).append(infoDiv)));
-        rowDiv.append(modalDiv);
+        $('body').append(modalDiv);
       });
 
       $("#toReplaceAwards").html(rowDiv);
@@ -194,7 +200,7 @@ function generateBooksContent() {
       infoDiv.append(descrSpan).append(buyBtnModal);
 
       modalDiv.append(innerDiv.append(modalContentDiv.append(imgContainer).append(infoDiv)));
-      rowDiv.append(modalDiv);
+      $('body').append(modalDiv);
     });
     $("#toReplaceBooks").html(rowDiv);
   });
@@ -382,13 +388,15 @@ $( "#VideoModal" ).on( "hidden.bs.modal", function ( e ) {
     } )
   }
   window.addEventListener( 'load', navbarlinksActive )
-  onscroll( document, navbarlinksActive )
-
+  document.addEventListener( 'scroll', navbarlinksActive )
+  
   /**
    * Scrolls to an element with header offset
    */
   const scrollto = ( el ) => {
-    let elementPos = select( el ).offsetTop
+    let element = select( el );
+    if (!element) return;
+    let elementPos = element.getBoundingClientRect().top + window.scrollY;
     window.scrollTo( {
       top: elementPos,
       behavior: 'smooth'

@@ -1092,14 +1092,14 @@ section {
 /* Fix for the backdrop shaded section */
 .modal-backdrop {
   background-color: #000 !important;
-  opacity: 0.7 !important;
-  z-index: 1040 !important;
+  opacity: 0.6 !important;
+  z-index: 9998 !important;
 }
 
 .modal {
-  background: transparent !important;
+  background: none !important;
   backdrop-filter: none !important;
-  z-index: 1050 !important;
+  z-index: 9999 !important;
 }
 
 .modal-dialog {
