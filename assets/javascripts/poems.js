@@ -32,27 +32,43 @@ function generatePoemsContent() {
         .attr("src", "https://img.youtube.com/vi/" + this.poemSrc + "/hqdefault.jpg")
         .addClass("img-fluid image w-100 h-100 shadow-1-strong rounded");
       
-      let ytImg = $("<img>")
-        .attr("src", "assets/images/play-button.webp")
-        .addClass("yt-play-image w-25");
+      // Replaced image with CSS play button
+      let playBtn = $("<div>").addClass("play-btn");
 
       if (this.poemTitle != '' && this.poemTitle != undefined) {
-        let titleSpan = $("<span>").addClass("badge badge-pill bg-info poemTitle w-100").append(this.poemTitle);
+        // Added title attribute for tooltip
+        let titleSpan = $("<span>")
+          .addClass("badge badge-pill bg-info poemTitle w-100 text-truncate")
+          .attr("title", this.poemTitle)
+          .attr("data-bs-toggle", "tooltip")
+          .attr("data-bs-placement", "top")
+          .append(this.poemTitle);
+          
         if (index < 5) {
           titleSpan.append($("<span>").addClass("badge bg-danger ms-2").text("New"));
         }
-        rowDiv.append(colDiv.append(imgDiv.append(a.append(titleSpan).append(img).append(ytImg))));
+        rowDiv.append(colDiv.append(imgDiv.append(a.append(titleSpan).append(img).append(playBtn))));
       } else {
-        rowDiv.append(colDiv.append(imgDiv.append(a.append(img).append(ytImg))));
+        rowDiv.append(colDiv.append(imgDiv.append(a.append(img).append(playBtn))));
       }
     });
 
     // Update DOM only after data is processed
     $("#toReplacePoems").html(rowDiv);
     
+    // Initialize tooltips
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+      return new bootstrap.Tooltip(tooltipTriggerEl)
+    })
+    
     // Fetch titles after elements are in the DOM
     $('.video-holder').each(function (i, obj) {
-      getVideoTitle($(this).data("id")).then((data) => $(this).find("span").text(data));
+      getVideoTitle($(this).data("id")).then((data) => {
+        $(this).find("span.poemTitle").text(data).attr("title", data);
+        // Re-initialize tooltip for updated title if necessary
+        // new bootstrap.Tooltip($(this).find("span.poemTitle")[0]);
+      });
     });
 
   }).fail(function () {
