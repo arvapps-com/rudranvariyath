@@ -1,45 +1,54 @@
 function generateGalleryContent () {
-
-  let rowDiv_for_home = $( "<div>" ).addClass( "row justify-content-center" );
   $.getJSON( 'assets/javascripts/gallery-images.json', function ( galleryImages ) {
+    const rowDiv = $( "<div>" ).addClass( "row justify-content-center" );
+    
+    // Grouping by orientation
+    const portraitGroup = $("<div>").addClass("row justify-content-center mb-4");
+    const landscapeGroup = $("<div>").addClass("row justify-content-center");
+    
+    portraitGroup.append($("<div>").addClass("orientation-heading").html("<i class='bi bi-person-bounding-box'></i> Portrait Collection"));
+    landscapeGroup.append($("<div>").addClass("orientation-heading").html("<i class='bi bi-image'></i> Landscape Collection"));
+
     $.each( galleryImages, function ( index ) {
-      // For thumbnails
-      let div = $( "<div>" )
-        .addClass( "col-lg-2 col-md-3 col-sm-2 m-3 position-relative rounded p-3 border border-2 rounded shadow" );
+      const img = new Image();
+      img.src = this.imageSrc;
+      const imageData = this;
 
-      let a = $( "<a>" ).attr( "href", "#!" ).attr( "data-bs-toggle", "modal" ).attr( "data-bs-target", "#GalleryImage" + index )
-      let img = $( "<img>" )
-        .attr( "src", this.imageSrc )
-        .attr( "loading", "lazy" )
-        .attr( "decoding", "async" )
-        .attr( "alt", this.imageTitle || "Gallery Image" )
-        .addClass( "img-fluid image w-100 h-100 shadow-1-strong rounded" );
-      div.append( a.append( img ) );
-      rowDiv_for_home.append( div );
-      // This is for pop up section
-      let modalDiv = $( "<div>" ).attr( "id", "GalleryImage" + index ).attr( "tabindex", "-1" ).attr( "aria-labelledby", "GalleryImage" + index + "Label" ).attr( "aria-hidden", "true" ).addClass( "modal fade" );
+      img.onload = function() {
+        const isPortrait = img.height > img.width;
+        const orientationClass = isPortrait ? "portrait-thumbnail" : "landscape-thumbnail";
+        const modalImgClass = isPortrait ? "portrait-modal-img" : "landscape-modal-img";
+        
+        let div = $( "<div>" ).addClass( "m-3 frame-container " + orientationClass );
+        let a = $( "<a>" ).attr( "href", "#!" ).attr( "data-bs-toggle", "modal" ).attr( "data-bs-target", "#GalleryImage" + index );
+        let thumbImg = $( "<img>" ).attr( "src", imageData.imageSrc ).attr( "loading", "lazy" ).addClass( "img-fluid" );
+        
+        div.append( a.append( thumbImg ) );
+        if (isPortrait) portraitGroup.append(div);
+        else landscapeGroup.append(div);
 
-      let innerDiv = $( "<div>" ).addClass( "modal-dialog modal-lg" );
-      let modalContentDiv = $( "<div>" ).addClass( "modal-content p-3" );
-      let imgModalContent = $( "<img>" )
-        .attr( "src", this.imageSrc )
-        .attr( "loading", "lazy" )
-        .attr( "decoding", "async" )
-        .addClass( "img-fluid image shadow-1-strong rounded" );
+        // Modal section
+        let modalDiv = $( "<div>" ).attr( "id", "GalleryImage" + index ).attr( "tabindex", "-1" ).addClass( "modal fade" );
+        let innerDiv = $( "<div>" ).addClass( "modal-dialog modal-lg modal-dialog-centered" );
+        let modalContentDiv = $( "<div>" ).addClass( "modal-content p-3" );
+        
+        let imgContainer = $("<div>").addClass("modal-image-container");
+        let imgModalContent = $( "<img>" ).attr( "src", imageData.imageSrc ).addClass( modalImgClass + " rounded shadow" );
+        imgContainer.append(imgModalContent);
 
-      let descrSpan = $( "<span>" ).attr( "style", "width: 100%;" ).addClass( "badge bg-primary text-center" )//.append( this.imageDescription );//TODO
-      let buttonDiv = $( "<div>" ).addClass( "text-center p-3" );
-      let button = $( "<button>" ).attr( "type", "button" ).attr( "data-bs-dismiss", "modal" ).addClass( "btn btn-danger w-100" ).append( "Close" );
-      modalDiv.append( innerDiv.append( modalContentDiv.append( imgModalContent ).append( descrSpan ).append( buttonDiv.append( button ) ) ) )
-      rowDiv_for_home.append( modalDiv );
+        let descrSpan = $( "<span>" ).addClass( "badge bg-primary text-center mt-3 w-100" ).text(imageData.imageDescription || "");
+        let button = $( "<button>" ).attr( "type", "button" ).attr( "data-bs-dismiss", "modal" ).addClass( "btn btn-danger w-100 mt-3" ).append( "Close" );
+        
+        modalDiv.append( innerDiv.append( modalContentDiv.append( imgContainer ).append( descrSpan ).append( button ) ) );
+        rowDiv.append( modalDiv );
+      };
+    });
 
-    } );
-    // you haven't touched the DOM yet, everything thus far has been in memory
-    $( "#toReplaceGallery" ).html( rowDiv_for_home ); // this is the only time you touch the DOM
-  } ).fail( function () {
-    console.error( "Failed to load the gallery images JSON file." );
-  } );
+    rowDiv.prepend(landscapeGroup).prepend(portraitGroup);
+    $( "#toReplaceGallery" ).html( rowDiv );
+  });
 }
+
 async function getVideoTitle ( videoId ) {
   var url = "https://www.youtube.com/watch?v=" + videoId;
   var title;
@@ -54,156 +63,109 @@ async function getVideoTitle ( videoId ) {
 }
 
 function generatePoemsContent_for_home () {
-
   let rowDiv_for_home = $( "<div>" ).addClass( "row justify-content-center" );
   $.getJSON( 'assets/javascripts/poem-ids-small.json', function ( poems ) {
-
-
     $.each( poems, function ( index ) {
-      let colDiv = $( "<div>" )
-        .addClass( "col-lg-2 col-md-4 col-sm-6 m-2 position-relative rounded p-2 border border-2 rounded shadow" );
-      // let colDiv = $( "<div>" ).addClass( "col-lg-2 col-md-3 mb-6 mb-lg-0 p-3" );
-      let imgDiv = $( "<div>" ).attr( "data-id", this.poemSrc ).attr( "data-ripple-color", "light" ).addClass( "bg-image hover-overlay ripple shadow-1-strong rounded video-holder" );
-      // let a = $("<a>").attr("href", "#!").attr("data-bs-toggle", "modal").attr("data-bs-target", "#VideoModal")
-      let a = $( "<a>" ).attr( "href", "https://www.youtube.com/watch?v=" + this.poemSrc ).attr( "target", "_blank" )
-      // console.log( this.poemTitle )
-      let img = $( "<img>" )
-        .attr( "src", "https://img.youtube.com/vi/" + this.poemSrc + "/hqdefault.jpg" )
-        .attr( "loading", "lazy" )
-        .attr( "decoding", "async" )
-        .addClass( "img-fluid image w-100 h-100 shadow-1-strong rounded" );
-      let ytImg = $( "<img>" )
-        .attr( "src", "assets/images/play-button.webp" )
-        .attr( "loading", "lazy" )
-        .addClass( "yt-play-image" )
-        .addClass( "w-25" );
+      let colDiv = $( "<div>" ).addClass( "col-lg-2 col-md-4 col-sm-6 m-2 position-relative rounded p-2 border border-2 rounded shadow" );
+      let imgDiv = $( "<div>" ).attr( "data-id", this.poemSrc ).addClass( "bg-image hover-overlay ripple shadow-1-strong rounded video-holder" );
+      let a = $( "<a>" ).attr( "href", "https://www.youtube.com/watch?v=" + this.poemSrc ).attr( "target", "_blank" );
+      let img = $( "<img>" ).attr( "src", "https://img.youtube.com/vi/" + this.poemSrc + "/hqdefault.jpg" ).addClass( "img-fluid image w-100 h-100 shadow-1-strong rounded" );
+      let ytImg = $( "<img>" ).attr( "src", "assets/images/play-button.webp" ).addClass( "yt-play-image w-25" );
 
       if ( this.poemTitle != '' && this.poemTitle != undefined ) {
         let titleSpan = $( "<span>" ).addClass( "badge badge-pill bg-info poemTitle w-100" ).append( this.poemTitle );
-        if ( index < 5 ) {
-          titleSpan.append( $( "<span>" ).addClass( "badge bg-danger ms-2" ).text( "New" ) );
-        }
+        if ( index < 5 ) titleSpan.append( $( "<span>" ).addClass( "badge bg-danger ms-2" ).text( "New" ) );
         rowDiv_for_home.append( colDiv.append( imgDiv.append( a.append( titleSpan ).append( img ).append( ytImg ) ) ) );
       } else {
         rowDiv_for_home.append( colDiv.append( imgDiv.append( a.append( img ).append( ytImg ) ) ) );
       }
-
-
-    } );
-    // Add a Bootstrap-styled div acting as a link at the end
-    let linkDiv = $( "<div>" )
-      .addClass(
-        "text-center mt-4 p-3 bg-primary text-white rounded cursor-pointer"
-      )
-      .attr( "onclick", "window.location.href='poems.html#poems';" )
-      .text( "View All Poems" );
-
+    });
+    let linkDiv = $( "<div>" ).addClass( "text-center mt-4 p-3 bg-primary text-white rounded cursor-pointer" ).attr( "onclick", "window.location.href='poems.html#poems';" ).text( "View All Poems" );
     rowDiv_for_home.append( linkDiv );
-    $( "#toReplacePoems_for_home" ).html( rowDiv_for_home ); // this is the only time you touch the DOM
-  } ).fail( function () {
-    console.error( "Failed to load the gallery images JSON file." );
-  } );
-
-
+    $( "#toReplacePoems_for_home" ).html( rowDiv_for_home );
+  });
 }
 
 function generateAwardsContent () {
-
-  let rowDiv_for_home = $( "<div>" ).addClass( "row justify-content-center" );
   $.getJSON( 'assets/javascripts/award-images.json', function ( awardImages ) {
+    const rowDiv = $( "<div>" ).addClass( "row justify-content-center" );
+    const portraitGroup = $("<div>").addClass("row justify-content-center mb-4");
+    const landscapeGroup = $("<div>").addClass("row justify-content-center");
+    
+    portraitGroup.append($("<div>").addClass("orientation-heading").html("<i class='bi bi-trophy'></i> Portrait Awards"));
+    landscapeGroup.append($("<div>").addClass("orientation-heading").html("<i class='bi bi-award'></i> Landscape Awards"));
+
     $.each( awardImages, function ( index ) {
-      // For thumbnails
-      let div = $( "<div>" )
-        .addClass( "col-lg-2 col-md-3 col-sm-2 m-3 position-relative rounded p-3 border border-2 rounded shadow" );
+      const img = new Image();
+      img.src = this.imageSrc;
+      const imageData = this;
 
-      let a = $( "<a>" ).attr( "href", "#!" ).attr( "data-bs-toggle", "modal" ).attr( "data-bs-target", "#AwardImage" + index )
-      let img = $( "<img>" )
-        .attr( "src", this.imageSrc )
-        .attr( "loading", "lazy" )
-        .attr( "decoding", "async" )
-        .addClass( "img-fluid image w-100 h-100 shadow-1-strong rounded" );
-      div.append( a.append( img ) );
-      rowDiv_for_home.append( div );
-      // This is for pop up section
-      let modalDiv = $( "<div>" ).attr( "id", "AwardImage" + index ).attr( "tabindex", "-1" ).attr( "aria-labelledby", "AwardImage" + index + "Label" ).attr( "aria-hidden", "true" ).addClass( "modal fade" );
+      img.onload = function() {
+        const isPortrait = img.height > img.width;
+        const orientationClass = isPortrait ? "portrait-thumbnail" : "landscape-thumbnail";
+        const modalImgClass = isPortrait ? "portrait-modal-img" : "landscape-modal-img";
+        
+        let div = $( "<div>" ).addClass( "m-3 frame-container " + orientationClass );
+        let a = $( "<a>" ).attr( "href", "#!" ).attr( "data-bs-toggle", "modal" ).attr( "data-bs-target", "#AwardImage" + index );
+        let thumbImg = $( "<img>" ).attr( "src", imageData.imageSrc ).addClass( "img-fluid shadow-1-strong rounded" );
+        
+        div.append( a.append( thumbImg ) );
+        if (isPortrait) portraitGroup.append(div);
+        else landscapeGroup.append(div);
 
-      let innerDiv = $( "<div>" ).addClass( "modal-dialog modal-lg" );
-      let modalContentDiv = $( "<div>" ).addClass( "modal-content p-3" );
-      let imgModalContent = $( "<img>" )
-        .attr( "src", this.imageSrc )
-        .attr( "loading", "lazy" )
-        .attr( "decoding", "async" )
-        .addClass( "img-fluid image shadow-1-strong rounded" );
+        let modalDiv = $( "<div>" ).attr( "id", "AwardImage" + index ).attr( "tabindex", "-1" ).addClass( "modal fade" );
+        let innerDiv = $( "<div>" ).addClass( "modal-dialog modal-lg modal-dialog-centered" );
+        let modalContentDiv = $( "<div>" ).addClass( "modal-content p-3" );
+        
+        let imgContainer = $("<div>").addClass("modal-image-container");
+        let imgModalContent = $( "<img>" ).attr( "src", imageData.imageSrc ).addClass( modalImgClass + " rounded shadow" );
+        imgContainer.append(imgModalContent);
 
-      let descrSpan = $( "<span>" ).attr( "style", "width: 100%;" ).addClass( "badge bg-primary text-center" ).append( this.imageDescription );//TODO
-      let buttonDiv = $( "<div>" ).addClass( "text-center p-3" );
-      let button = $( "<button>" ).attr( "type", "button" ).attr( "data-bs-dismiss", "modal" ).addClass( "btn btn-danger w-100" ).append( "Close" );
-      modalDiv.append( innerDiv.append( modalContentDiv.append( imgModalContent ).append( descrSpan ).append( buttonDiv.append( button ) ) ) )
-      rowDiv_for_home.append( modalDiv );
+        let descrSpan = $( "<span>" ).addClass( "badge bg-primary text-center mt-3 w-100" ).append( imageData.imageDescription );
+        let button = $( "<button>" ).attr( "type", "button" ).attr( "data-bs-dismiss", "modal" ).addClass( "btn btn-danger w-100 mt-3" ).append( "Close" );
+        
+        modalDiv.append( innerDiv.append( modalContentDiv.append( imgContainer ).append( descrSpan ).append( button ) ) );
+        rowDiv.append( modalDiv );
+      };
+    });
 
-    } );
-    // you haven't touched the DOM yet, everything thus far has been in memory
-    $( "#toReplaceAwards" ).html( rowDiv_for_home ); // this is the only time you touch the DOM
-  } ).fail( function () {
-    console.error( "Failed to load the Awards images JSON file." );
-  } );
+    rowDiv.prepend(landscapeGroup).prepend(portraitGroup);
+    $( "#toReplaceAwards" ).html( rowDiv );
+  });
 }
+
 function generateBooksContent () {
-
-  let rowDiv_for_home = $( "<div>" ).addClass( "row justify-content-center" );
   $.getJSON( 'assets/javascripts/book-images.json', function ( bookImages ) {
+    const rowDiv = $( "<div>" ).addClass( "row justify-content-center" );
     $.each( bookImages, function ( index ) {
-      // For thumbnails
-      let div = $( "<div>" )
-        .addClass( "col-lg-3 col-md-4 col-sm-6 m-3 position-relative rounded p-3 border border-2 rounded shadow book-card text-center" );
-
-      let a = $( "<a>" ).attr( "href", "#!" ).attr( "data-bs-toggle", "modal" ).attr( "data-bs-target", "#BookImage" + index )
-      let img = $( "<img>" )
-        .attr( "src", this.imageSrc )
-        .attr( "loading", "lazy" )
-        .attr( "decoding", "async" )
-        .addClass( "img-fluid image w-100 shadow-1-strong rounded mb-2" )
-        .css("aspect-ratio", "2/3")
-        .css("object-fit", "cover");
+      const imageData = this;
+      let div = $( "<div>" ).addClass( "m-3 frame-container portrait-thumbnail book-card text-center" );
+      let a = $( "<a>" ).attr( "href", "#!" ).attr( "data-bs-toggle", "modal" ).attr( "data-bs-target", "#BookImage" + index );
+      let img = $( "<img>" ).attr( "src", imageData.imageSrc ).addClass( "img-fluid mb-2" );
       
-      let title = $("<h5>").addClass("mb-2").text(this.imageTitle);
-      
-      let buyBtn = $("<button>")
-        .addClass("btn btn-success w-100 buy-now-btn mb-1")
-        .attr("data-title", this.imageTitle)
-        .html("<i class='bi bi-cart-fill me-2'></i>Buy Now @ ₹100");
+      let title = $("<h5>").addClass("mb-2 fw-bold").text(imageData.imageTitle);
+      let buyBtn = $("<button>").addClass("btn btn-success w-100 buy-now-btn mb-1").attr("data-title", imageData.imageTitle).html("<i class='bi bi-cart-fill me-2'></i>Buy @ ₹100");
 
       div.append( a.append( img ) ).append(title).append(buyBtn);
-      rowDiv_for_home.append( div );
+      rowDiv.append( div );
       
-      // This is for pop up section
-      let modalDiv = $( "<div>" ).attr( "id", "BookImage" + index ).attr( "tabindex", "-1" ).attr( "aria-labelledby", "BookImage" + index + "Label" ).attr( "aria-hidden", "true" ).addClass( "modal fade" );
-
-      let innerDiv = $( "<div>" ).addClass( "modal-dialog modal-lg" );
+      let modalDiv = $( "<div>" ).attr( "id", "BookImage" + index ).attr( "tabindex", "-1" ).addClass( "modal fade" );
+      let innerDiv = $( "<div>" ).addClass( "modal-dialog modal-lg modal-dialog-centered" );
       let modalContentDiv = $( "<div>" ).addClass( "modal-content p-3" );
-      let imgModalContent = $( "<img>" )
-        .attr( "src", this.imageSrc )
-        .attr( "loading", "lazy" )
-        .attr( "decoding", "async" )
-        .addClass( "img-fluid image shadow-1-strong rounded" );
+      
+      let imgContainer = $("<div>").addClass("modal-image-container");
+      let imgModalContent = $( "<img>" ).attr( "src", imageData.imageSrc ).addClass( "portrait-modal-img rounded shadow" );
+      imgContainer.append(imgModalContent);
 
-      let descrSpan = $( "<span>" ).attr( "style", "width: 100%;" ).addClass( "badge bg-primary text-center mt-3" ).append( this.imageDescription );//TODO
-      let buyBtnModal = $("<button>")
-        .addClass("btn btn-success w-100 buy-now-btn mt-3 mb-2")
-        .attr("data-title", this.imageTitle)
-        .html("<i class='bi bi-cart-fill me-2'></i>Buy Now @ ₹100");
-      let buttonDiv = $( "<div>" ).addClass( "text-center" );
+      let descrSpan = $( "<span>" ).addClass( "badge bg-primary text-center mt-3 w-100" ).append( imageData.imageDescription );
+      let buyBtnModal = $("<button>").addClass("btn btn-success w-100 buy-now-btn mt-3 mb-2").attr("data-title", imageData.imageTitle).html("<i class='bi bi-cart-fill me-2'></i>Buy Now @ ₹100");
       let button = $( "<button>" ).attr( "type", "button" ).attr( "data-bs-dismiss", "modal" ).addClass( "btn btn-danger w-100" ).append( "Close" );
       
-      modalDiv.append( innerDiv.append( modalContentDiv.append( imgModalContent ).append( descrSpan ).append(buyBtnModal).append( buttonDiv.append( button ) ) ) )
-      rowDiv_for_home.append( modalDiv );
-
-    } );
-    // you haven't touched the DOM yet, everything thus far has been in memory
-    $( "#toReplaceBooks" ).html( rowDiv_for_home ); // this is the only time you touch the DOM
-  } ).fail( function () {
-    console.error( "Failed to load the gallery images JSON file." );
-  } );
+      modalDiv.append( innerDiv.append( modalContentDiv.append( imgContainer ).append( descrSpan ).append(buyBtnModal).append( button ) ) );
+      rowDiv.append( modalDiv );
+    });
+    $( "#toReplaceBooks" ).html( rowDiv );
+  });
 }
 
 /**
