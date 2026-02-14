@@ -1,21 +1,21 @@
 [
     {
-        "imageSrc": "assets/images/books/Rudran_variyathinte_kavithakal.jpg",
+        "imageSrc": "assets/images/books/Rudran_variyathinte_kavithakal.webp",
         "imageTitle": "Rudran variyathinte kavithakal",
         "imageDescription": "Rudran variyathinte kavithakal"
     },
     {
-        "imageSrc": "assets/images/books/Ormacheppu.jpg",
+        "imageSrc": "assets/images/books/Ormacheppu.webp",
         "imageTitle": "Ormacheppu",
         "imageDescription": "Ormacheppu"
     },
     {
-        "imageSrc": "assets/images/books/Nilav.png",
+        "imageSrc": "assets/images/books/Nilav.webp",
         "imageTitle": "Nilav",
         "imageDescription": "Nilav"
     },
     {
-        "imageSrc": "assets/images/books/naalam_yamam.png",
+        "imageSrc": "assets/images/books/naalam_yamam.webp",
         "imageTitle": "Naalamyamam",
         "imageDescription": "Naalamyamam"
     },
@@ -25,7 +25,7 @@
         "imageDescription": "Inayumothorunaal"
     },
     {
-        "imageSrc": "assets/images/books/kaliyugakazhchakal.png",
+        "imageSrc": "assets/images/books/kaliyugakazhchakal.webp",
         "imageTitle": "Kaliyugakazhchakal",
         "imageDescription": "Kaliyugakazhchakal"
     }

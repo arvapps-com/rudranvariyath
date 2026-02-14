@@ -7,16 +7,25 @@ function generateGalleryContent () {
       let div = $( "<div>" )
         .addClass( "col-lg-2 col-md-3 col-sm-2 m-3 position-relative rounded p-3 border border-2 rounded shadow" );
 
-      let a = $( "<a>" ).attr( "href", "#!" ).attr( "data-bs-toggle", "modal" ).attr( "data-bs-target", "#GalleryImage" + index ) //TODO
-      let img = $( "<img>" ).attr( "src", this.imageSrc ).addClass( "img-fluid image w-100 h-100 shadow-1-strong rounded" );
+      let a = $( "<a>" ).attr( "href", "#!" ).attr( "data-bs-toggle", "modal" ).attr( "data-bs-target", "#GalleryImage" + index )
+      let img = $( "<img>" )
+        .attr( "src", this.imageSrc )
+        .attr( "loading", "lazy" )
+        .attr( "decoding", "async" )
+        .attr( "alt", this.imageTitle || "Gallery Image" )
+        .addClass( "img-fluid image w-100 h-100 shadow-1-strong rounded" );
       div.append( a.append( img ) );
       rowDiv_for_home.append( div );
       // This is for pop up section
-      let modalDiv = $( "<div>" ).attr( "id", "GalleryImage" + index ).attr( "tabindex", "1" ).attr( "aria-labelledby", "GalleryImage" + index + "Label" ).attr( "aria-hidden", "true" ).addClass( "modal fade" );
+      let modalDiv = $( "<div>" ).attr( "id", "GalleryImage" + index ).attr( "tabindex", "-1" ).attr( "aria-labelledby", "GalleryImage" + index + "Label" ).attr( "aria-hidden", "true" ).addClass( "modal fade" );
 
       let innerDiv = $( "<div>" ).addClass( "modal-dialog modal-lg" );
       let modalContentDiv = $( "<div>" ).addClass( "modal-content col-lg-2 col-md-4 col-sm-4 m-3  position-relative rounded p-3" );
-      let imgModalContent = $( "<img>" ).attr( "src", this.imageSrc ).addClass( "img-fluid image shadow-1-strong rounded" );
+      let imgModalContent = $( "<img>" )
+        .attr( "src", this.imageSrc )
+        .attr( "loading", "lazy" )
+        .attr( "decoding", "async" )
+        .addClass( "img-fluid image shadow-1-strong rounded" );
 
       let descrSpan = $( "<span>" ).attr( "style", "width: 100%;" ).addClass( "badge bg-primary text-center" )//.append( this.imageDescription );//TODO
       let buttonDiv = $( "<div>" ).addClass( "text-center p-3" );
@@ -58,8 +67,16 @@ function generatePoemsContent_for_home () {
       // let a = $("<a>").attr("href", "#!").attr("data-bs-toggle", "modal").attr("data-bs-target", "#VideoModal")
       let a = $( "<a>" ).attr( "href", "https://www.youtube.com/watch?v=" + this.poemSrc ).attr( "target", "_blank" )
       // console.log( this.poemTitle )
-      let img = $( "<img>" ).attr( "src", "https://img.youtube.com/vi/" + this.poemSrc + "/hqdefault.jpg" ).addClass( "img-fluid image w-100 h-100 shadow-1-strong rounded" );
-      let ytImg = $( "<img>" ).attr( "src", "assets/images/play-button.png" ).addClass( "yt-play-image" ).addClass( "w-25" );
+      let img = $( "<img>" )
+        .attr( "src", "https://img.youtube.com/vi/" + this.poemSrc + "/hqdefault.jpg" )
+        .attr( "loading", "lazy" )
+        .attr( "decoding", "async" )
+        .addClass( "img-fluid image w-100 h-100 shadow-1-strong rounded" );
+      let ytImg = $( "<img>" )
+        .attr( "src", "assets/images/play-button.webp" )
+        .attr( "loading", "lazy" )
+        .addClass( "yt-play-image" )
+        .addClass( "w-25" );
 
       if ( this.poemTitle != '' && this.poemTitle != undefined ) {
         let titleSpan = $( "<span>" ).addClass( "badge badge-pill bg-info poemTitle w-100" ).append( this.poemTitle );
@@ -99,16 +116,24 @@ function generateAwardsContent () {
       let div = $( "<div>" )
         .addClass( "col-lg-2 col-md-3 col-sm-2 m-3 position-relative rounded p-3 border border-2 rounded shadow" );
 
-      let a = $( "<a>" ).attr( "href", "#!" ).attr( "data-bs-toggle", "modal" ).attr( "data-bs-target", "#AwardImage" + index ) //TODO
-      let img = $( "<img>" ).attr( "src", this.imageSrc ).addClass( "img-fluid image w-100 h-100 shadow-1-strong rounded" );
+      let a = $( "<a>" ).attr( "href", "#!" ).attr( "data-bs-toggle", "modal" ).attr( "data-bs-target", "#AwardImage" + index )
+      let img = $( "<img>" )
+        .attr( "src", this.imageSrc )
+        .attr( "loading", "lazy" )
+        .attr( "decoding", "async" )
+        .addClass( "img-fluid image w-100 h-100 shadow-1-strong rounded" );
       div.append( a.append( img ) );
       rowDiv_for_home.append( div );
       // This is for pop up section
-      let modalDiv = $( "<div>" ).attr( "id", "AwardImage" + index ).attr( "tabindex", "1" ).attr( "aria-labelledby", "AwardImage" + index + "Label" ).attr( "aria-hidden", "true" ).addClass( "modal fade" );
+      let modalDiv = $( "<div>" ).attr( "id", "AwardImage" + index ).attr( "tabindex", "-1" ).attr( "aria-labelledby", "AwardImage" + index + "Label" ).attr( "aria-hidden", "true" ).addClass( "modal fade" );
 
       let innerDiv = $( "<div>" ).addClass( "modal-dialog modal-lg" );
       let modalContentDiv = $( "<div>" ).addClass( "modal-content col-lg-2 col-md-4 col-sm-4 m-3  position-relative rounded p-3" );
-      let imgModalContent = $( "<img>" ).attr( "src", this.imageSrc ).addClass( "img-fluid image shadow-1-strong rounded" );
+      let imgModalContent = $( "<img>" )
+        .attr( "src", this.imageSrc )
+        .attr( "loading", "lazy" )
+        .attr( "decoding", "async" )
+        .addClass( "img-fluid image shadow-1-strong rounded" );
 
       let descrSpan = $( "<span>" ).attr( "style", "width: 100%;" ).addClass( "badge bg-primary text-center" ).append( this.imageDescription );//TODO
       let buttonDiv = $( "<div>" ).addClass( "text-center p-3" );
@@ -132,16 +157,24 @@ function generateBooksContent () {
       let div = $( "<div>" )
         .addClass( "col-lg-2 col-md-3 col-sm-2 m-3 position-relative rounded p-3 border border-2 rounded shadow" );
 
-      let a = $( "<a>" ).attr( "href", "#!" ).attr( "data-bs-toggle", "modal" ).attr( "data-bs-target", "#BookImage" + index ) //TODO
-      let img = $( "<img>" ).attr( "src", this.imageSrc ).addClass( "img-fluid image w-100 h-100 shadow-1-strong rounded" );
+      let a = $( "<a>" ).attr( "href", "#!" ).attr( "data-bs-toggle", "modal" ).attr( "data-bs-target", "#BookImage" + index )
+      let img = $( "<img>" )
+        .attr( "src", this.imageSrc )
+        .attr( "loading", "lazy" )
+        .attr( "decoding", "async" )
+        .addClass( "img-fluid image w-100 h-100 shadow-1-strong rounded" );
       div.append( a.append( img ) );
       rowDiv_for_home.append( div );
       // This is for pop up section
-      let modalDiv = $( "<div>" ).attr( "id", "BookImage" + index ).attr( "tabindex", "1" ).attr( "aria-labelledby", "BookImage" + index + "Label" ).attr( "aria-hidden", "true" ).addClass( "modal fade" );
+      let modalDiv = $( "<div>" ).attr( "id", "BookImage" + index ).attr( "tabindex", "-1" ).attr( "aria-labelledby", "BookImage" + index + "Label" ).attr( "aria-hidden", "true" ).addClass( "modal fade" );
 
       let innerDiv = $( "<div>" ).addClass( "modal-dialog modal-lg" );
       let modalContentDiv = $( "<div>" ).addClass( "modal-content col-lg-2 col-md-4 col-sm-4 m-3  position-relative rounded p-3" );
-      let imgModalContent = $( "<img>" ).attr( "src", this.imageSrc ).addClass( "img-fluid image shadow-1-strong rounded" );
+      let imgModalContent = $( "<img>" )
+        .attr( "src", this.imageSrc )
+        .attr( "loading", "lazy" )
+        .attr( "decoding", "async" )
+        .addClass( "img-fluid image shadow-1-strong rounded" );
 
       let descrSpan = $( "<span>" ).attr( "style", "width: 100%;" ).addClass( "badge bg-primary text-center" ).append( this.imageDescription );//TODO
       let buttonDiv = $( "<div>" ).addClass( "text-center p-3" );

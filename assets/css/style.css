@@ -1,7 +1,15 @@
+html {
+  scroll-behavior: smooth;
+}
 
-/*--------------------------------------------------------------
-# Back to top button
---------------------------------------------------------------*/
+body {
+  font-family: "Open Sans", sans-serif;
+  color: #272829;
+}
+
+section {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 500px;
 .back-to-top {
   position: fixed;
   visibility: hidden;
@@ -170,7 +178,7 @@
 #hero {
   width: 100%;
   height: 100vh;
-  background: url("../images/hero-bg.jpg") top center;
+  background: url("../images/hero-bg.webp") top center;
   background-size: cover;
   opacity: 0.75;
 }

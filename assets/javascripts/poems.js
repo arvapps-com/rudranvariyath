@@ -26,7 +26,7 @@ function generatePoemsContent () {
       let a = $( "<a>" ).attr( "href", "https://www.youtube.com/watch?v=" + this.poemSrc ).attr( "target", "_blank" )
       // console.log( this.poemTitle )
       let img = $( "<img>" ).attr( "src", "https://img.youtube.com/vi/" + this.poemSrc + "/hqdefault.jpg" ).addClass( "img-fluid image w-100 h-100 shadow-1-strong rounded" );
-      let ytImg = $( "<img>" ).attr( "src", "assets/images/play-button.png" ).addClass( "yt-play-image" ).addClass( "w-25" );
+      let ytImg = $( "<img>" ).attr( "src", "assets/images/play-button.webp" ).addClass( "yt-play-image" ).addClass( "w-25" );
 
       if ( this.poemTitle != '' && this.poemTitle != undefined ) {
         let titleSpan = $( "<span>" ).addClass( "badge badge-pill bg-info poemTitle w-100" ).append( this.poemTitle );

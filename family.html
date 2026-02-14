@@ -13,9 +13,17 @@
         <link href="assets/images/favicon.png" rel="icon">
         <link href="assets/images/apple-touch-icon.png" rel="apple-touch-icon">
 
+        <meta content="Explore the family tree and lineage of Rudran Variyath." name="description">
+        <meta content="Rudran Variyath, Family Tree, Lineage, Kerala, Malappuram" name="keywords">
+
+        <!-- Preconnect for performance -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+
         <!-- Google Fonts -->
         <link
-            href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+            href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i&display=swap"
             rel="stylesheet">
 
         <!-- Vendor CSS Files -->
@@ -42,8 +50,9 @@
             <div class="d-flex flex-column">
 
                 <div class="profile">
-                    <a href="index.html"><img src="assets/images/avatars/avatar.jpg" alt=""
-                            class="img-fluid rounded-circle"></a>
+                    <a href="index.html">
+                        <img src="assets/images/avatars/avatar.webp" alt="Rudran Variyath" class="img-fluid rounded-circle" loading="lazy" decoding="async">
+                    </a>
                     <h1 class="text-light"><a href="index.html">Rudran Variyath</a></h1>
                     <div class="social-links mt-3 text-center">
                         <a href="https://twitter.com/rudranvariyath" target="_blank" class="twitter"><i
@@ -141,28 +150,31 @@
                 class="bi bi-arrow-up-short"></i></a>
 
         <!-- Vendor JS Files -->
-        <script src="assets/vendor/purecounter/purecounter.js"></script>
-        <script src="assets/vendor/aos/aos.js"></script>
-        <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-        <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-        <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-        <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
-        <script src="assets/vendor/typed.js/typed.min.js"></script>
-        <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
-
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js"
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
             integrity="sha512-n/4gHW3atM3QqRcbCn6ewmpxcLAHGaDjpEBu4xZd47N0W2oQ+6q7oc3PXstrJYXcbNU1OHdQ1T7pAP+gi5Yu8g=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            crossorigin="anonymous" referrerpolicy="no-referrer" defer></script>
+        
+        <script src="assets/vendor/purecounter/purecounter.js" defer></script>
+        <script src="assets/vendor/aos/aos.js" defer></script>
+        <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js" defer></script>
+        <script src="assets/vendor/glightbox/js/glightbox.min.js" defer></script>
+        <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js" defer></script>
+        <script src="assets/vendor/swiper/swiper-bundle.min.js" defer></script>
+        <script src="assets/vendor/typed.js/typed.min.js" defer></script>
+        <script src="assets/vendor/waypoints/noframework.waypoints.js" defer></script>
+
         <!-- Template Main JS File -->
-        <script src="assets/javascripts/main.js"></script>
+        <script src="assets/javascripts/main.js" defer></script>
 
         <!-- Family Data and Renderer -->
-        <script src="assets/javascripts/family-data.js"></script>
-        <script src="assets/javascripts/render-tree.js"></script>
+        <script src="assets/javascripts/family-data.js" defer></script>
+        <script src="assets/javascripts/render-tree.js" defer></script>
 
         <script>
-            // Initialize AOS
-            AOS.init();
+            // Initialize AOS when DOM is ready
+            document.addEventListener('DOMContentLoaded', function() {
+                AOS.init();
+            });
         </script>
     </body>
 

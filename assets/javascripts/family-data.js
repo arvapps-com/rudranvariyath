@@ -1,5 +1,5 @@
 const familyData = [
-  { id: 1, pids: [ 2 ], mid: 16, fid: 17, name: "Rudran Variyath", ImgUrl: "assets/images/avatars/avatar.jpg", role: "The Poet", gender: "male" },
+  { id: 1, pids: [ 2 ], mid: 16, fid: 17, name: "Rudran Variyath", ImgUrl: "assets/images/avatars/avatar.webp", role: "The Poet", gender: "male" },
   { id: 2, pids: [ 1 ], mid: 14, fid: 15, name: "Shylaja M N", role: "Wife", gender: "female" },
   { id: 3, pids: [ 4 ], mid: 2, fid: 1, name: "Arun R Variyath", role: "Son", gender: "male" },
   { id: 4, pids: [ 3 ], mid: 28, fid: 29, name: "Aparna", role: "Daughter-in-law", gender: "female" },
